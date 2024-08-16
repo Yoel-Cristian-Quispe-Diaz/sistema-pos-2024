@@ -1,11 +1,11 @@
-function MNuevoUsuario(){
+function MNuevoFactura(){
     $("#modal-default").modal("show");
    
     var obj="";
     $.ajax({
    
        type:"POST",
-       url:"vista/usuario/FNuevoUsuario.php",
+       url:"vista/factura/FNuevoFactura.php",
        data: obj,
        success: function(data) {
            $("#content-default").html(data);
@@ -13,15 +13,15 @@ function MNuevoUsuario(){
     })
    }
 
-function regUsuario(){
+function regFactura(){
  
-    var formData=new FormData($("#FRegUsuario")[0])
+    var formData=new FormData($("#FRegFactura")[0])
     if(formData.get("password")==formData.get("vrPassword")){
 
         $.ajax({
        
            type:"POST",
-           url:"controlador/usuarioControlador.php?ctrRegUsuario",
+           url:"controlador/facturaControlador.php?ctrRegFactura",
            data: formData,
            cache:false,
            contentType:false,
@@ -60,7 +60,7 @@ function regUsuario(){
 
 }
 
-function MEditUsuario(id){
+function MEditFactura(id){
 
     $("#modal-default").modal("show");
    
@@ -68,7 +68,7 @@ function MEditUsuario(id){
     $.ajax({
    
        type:"POST",
-       url:"vista/usuario/FEditUsuario.php?id="+id,
+       url:"vista/factura/FEditFactura.php?id="+id,
        data: obj,
        success: function(data) {
            $("#content-default").html(data);
@@ -79,15 +79,15 @@ function MEditUsuario(id){
 
     
 } //final
-function editUsuario(){
+function editFactura(){
 
-    var formData=new FormData($("#FEditUsuario")[0])
+    var formData=new FormData($("#FEditFactura")[0])
     if(formData.get("password")==formData.get("vrPassword")){
 
         $.ajax({
        
            type:"POST",
-           url:"controlador/usuarioControlador.php?ctrEditUsuario",
+           url:"controlador/facturaControlador.php?ctrEditFactura",
            data: formData,
            cache:false,
            contentType:false,
@@ -99,7 +99,7 @@ function editUsuario(){
                 Swal.fire({
                     icon: 'success',
                     showConfirmButton: false,
-                    title: "Usuario Actualizado",
+                    title: "Factura Actualizado",
                     timer: 1000
                     
                 });
@@ -128,14 +128,14 @@ function editUsuario(){
 }
 
 
-function MEliUsuario(id){
+function MEliFactura(id){
 
     var obj={
         id:id
     }
 
 Swal.fire({
-    title:"¿Estás seguro de eliminar este usuario?",
+    title:"¿Estás seguro de eliminar este factura?",
     showDenyButton:true,
     showCancelButton:false,
     confirmButtonText:'Confirmar',
@@ -144,7 +144,7 @@ Swal.fire({
     if(result.isConfirmed){
         $.ajax({
             type:"POST",
-            url:"controlador/usuarioControlador.php?ctrEliUsuario",
+            url:"controlador/facturaControlador.php?ctrEliFactura",
             data:obj,
             success: function(data) {
               if(data=="ok"){
@@ -155,7 +155,7 @@ Swal.fire({
                     icon: 'error',
                     showConfirmButton: false,
                     title: 'Error',
-                    text:'El usuario no puede ser eliminado',
+                    text:'El factura no puede ser eliminado',
                     timer: 1000
                     
                 });
