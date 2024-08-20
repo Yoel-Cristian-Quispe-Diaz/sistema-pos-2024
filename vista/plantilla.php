@@ -25,22 +25,6 @@ session_start();
   <link rel="stylesheet" href="assest/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 </head>
 
-<?php
-/* 
-if (
-  $_GET["ruta"] == "inicio" ||
-  $_GET["ruta"] == "VUsuario" ||
-  $_GET["ruta"] == "VCliente"
-) {
-  include "asideMenu.php";
-
-  include $_GET["ruta"] . ".php";
-
-  include "footer.php";
-} else {
-  include "vista/login.php";
-} */
-?>
 
 <?php
 if (isset($_SESSION["ingreso"]) && $_SESSION["ingreso"] == "ok") {
@@ -49,6 +33,7 @@ if (isset($_SESSION["ingreso"]) && $_SESSION["ingreso"] == "ok") {
       $_GET["ruta"] == "inicio" ||
       $_GET["ruta"] == "salir" ||
       $_GET["ruta"] == "VUsuario" ||
+      $_GET["ruta"] == "VProducto" ||
   $_GET["ruta"] == "VCliente"
     ) {
       include "asideMenu.php";

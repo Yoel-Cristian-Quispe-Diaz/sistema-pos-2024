@@ -1,110 +1,145 @@
 <?php
 
-require_once "../../controlador/usuarioControlador.php";
-require_once "../../modelo/usuarioModelo.php";
+require_once "../../controlador/productoControlador.php";
+require_once "../../modelo/productoModelo.php";
 
-$id=$_GET["id"];
-$usuario=ControladorUsuario::ctrInfoUsuario($id);
+$id = $_GET["id"];
+$producto = ControladorProducto::ctrInfoProducto($id);
 
 ?>
-<form action="" id="FEditUsuario">
-            <div class="modal-header">
-              <h4 class="modal-title">Registro Nuevo Usuario</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="">Login Usuario</label>
-                <input type="text" class="form-control" name="login" id="login" value="<?php echo $usuario["login_usuario"];?>" readonly>
-                <input type="hidden" name="idUsuario" value="<?php echo $usuario["id_usuario"]; ?>">
-              </div>
-              <div class="form-group">
-                <label for="">Contraseña</label>
-                <input type="password" class="form-control" name="password" id="password" value="<?php echo $usuario["password"];?>">
-              </div>
-              <div class="form-group">
-                <label for="">Repetir Contraseña</label>
-                <input type="password" class="form-control" name="vrPassword" id="vrPassword" value="<?php echo $usuario["password"];?>">
-            <input type="hidden" value="<?php echo $usuario["password"];?>" name="passActual">  
-            </div>
-              <div class="form-group">
-                <label for="">Perfil</label>
-                <select name="perfil" id="perfil" class="form-control">
-                    <option value="Administrador" <?php if($usuario["perfil"]=="Administrador"):?>selected<?php endif;?>
-                        >Administrador</option>
-                    <option value="Moderador"  <?php if($usuario["perfil"]=="Moderador"):?>selected<?php endif;?>
-                        >Moderador </option>
-                </select>
-              </div>
-              <div class="form-group">
-              
-              <label for="">Estado</label>
 
-        <div class="row">
+<form action="" id="FEditProducto">
+  <div class="modal-header">
+    <h4 class="modal-title">Registro Nuevo Producto</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <!-- id_producto	cod_producto	cod_producto_sin	nombre_producto	precio_producto	unidad_medida	unidad_medida_sin	imagen_producto	disponibilidad_producto -->
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="">ID De Producto</label>
+      <input type="text" class="form-control" name="id" id="id" value="<?php echo $producto["id_producto"]; ?>" readonly>
+    </div>
+    <div class="form-group">
+      <label for="">Codigo De Producto</label>
+      <input type="text" class="form-control" name="codigo_p" id="codigo_p" value="<?php echo $producto["cod_producto"]; ?>">
+    </div>
+    <div class="form-group">
+      <label for="">Codigo SIN</label>
+      <input type="text" class="form-control" name="codigo_p_s" id="codigo_p_s" value="<?php echo $producto["cod_producto_sin"]; ?>">
+    </div>
+    <div class="form-group">
+      <label for="">Nombre</label>
+      <input type="text" class="form-control" name="nombre" id="nombre" value="<?php echo $producto["nombre_producto"]; ?>">
+    </div>
+    <div class="form-group">
+      <label for="">Precio</label>
+      <input type="text" class="form-control" name="precio" id="precio" value="<?php echo $producto["precio_producto"]; ?>">
+    </div>
+    <div class="form-group">
+      <label for="">Unidad de Medida</label>
+      <input type="text" class="form-control" name="unidad" id="unidad" value="<?php echo $producto["unidad_medida"]; ?>">
+    </div>
+    <div class="form-group">
+      <label for="">Unidad SIN</label>
+      <input type="text" class="form-control" name="unidad_s" id="unidad_s" value="<?php echo $producto["unidad_medida_sin"]; ?>">
+    </div>
+    <div class="form-group">
+      <label for="">Imagen</label>
+      <input type="file" class="form-control" name="imagen" id="imagen"  onchange="previewImage(event)" value="<?php echo $producto["imagen_producto"]; ?>">
+      <center>
+        <img id="preview" src="<?php echo $producto["imagen_producto"]; ?>" alt="Vista previa de la imagen" style="display: block; max-width: 150px; margin-top: 20px ;"> </center>
+    </div>
+    <div class="form-group">
+      <label for="">Disponibilidad</label>
+
+      <div class="row">
         <div class="col-sm-6">
-        <div class="custom-control custom-radio">
-         <input class="custom-control-input" type="radio" id="estadoActivo" name="estado"
-         <?php if($usuario["estado_usuario"]=="1"):?>checked<?php endif;?> value="1">
-        <label for="estadoActivo" class="custom-control-label">Activo</label>
-        </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="disp" name="disponibilidad"
+              <?php if ($producto["disponibilidad_producto"] == "1"): ?>checked<?php endif; ?> value="1">
+            <label for="disp" class="custom-control-label">Disponible</label>
+          </div>
         </div>
 
         <div class="col-sm-6">
-        <div class="custom-control custom-radio">
-        <input class="custom-control-input" type="radio" id="estadoInactivo" name="estado" 
-        <?php if($usuario["estado_usuario"]=="0"):?>checked<?php endif;?> value="0">
-        <label for="estadoInactivo" class="custom-control-label">Inactivo</label>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="no_disp" name="disponibilidad"
+              <?php if ($producto["disponibilidad_producto"] == "0"): ?>checked<?php endif; ?> value="0">
+            <label for="no_disp" class="custom-control-label">No Disponible</label>
+          </div>
         </div>
-        </div>
-        </div>
-
-        
-        
-
-        
+      </div>
 
 
-            </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </div>
 </form>
 
 <script>
-$(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      editUsuario()
-    }
-  });
-  $('#FEditUsuario').validate({
-    rules: {
- 
-      password: {
-        required: true,
-        minlength: 3
-      },
-      vrPassword: {
-        required: true,
-        minlength: 3
-      },
-    },
 
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
+function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+
+  $(function() {
+    $.validator.setDefaults({
+      submitHandler: function() {
+        editProducto()
+      }
+    });
+    $('#FEditProducto').validate({
+      rules: {
+        codigo_p: {
+          required: true,
+          minlength: 3,
+        },
+        nombre: {
+          required: true,
+          minlength: 3
+        },
+        precio: {
+          required: true,
+          minlength: 1
+        },
+        unidad: {
+          required: true,
+          minlength: 1
+        },
+        unidad_s: {
+          required: true,
+          minlength: 1
+        },
+        codigo_p_s: {
+          required: true,
+          minlength: 1
+        },
+
+
+      },
+
+      errorElement: 'span',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function(element, errorClass, va2lidClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
   });
-});
 </script>

@@ -13,54 +13,66 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Lista de usuarios registrados</h3></div>
+          <h3 class="card-title">Lista de productos registrados</h3></div>
         <!-- /.card-header -->
         <div class="card-body">
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
+              <!-- id_producto	cod_producto	cod_producto_sin	nombre_producto	precio_producto	unidad_medida	unidad_medida_sin	imagen_producto	disponibilidad_producto -->
+
                 <th>ID</th>
-                <th>Login</th>
-                <th>Perfil</th>
-                <th>Estado</th>
-                <th>Ultimo acceso</th>
-                <th>Fecha de registro</th>
+                <th>Codigo Producto</th>
+                <th>Codigo SIN</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Unidad de Medida</th>
+                <th>Unidad SIN</th>
+                <th>Imagen</th>
+                <th>Disponibilidad</th>
                 <td>
-                  <button class="btn btn-primary" style="width: 100%;" onclick="MNuevoUsuario()">Nuevo</button>
+                  <button class="btn btn-primary" style="width: 100%;" onclick="MNuevoProducto()">Nuevo</button>
                 </td>
               </tr>
             </thead>
 
             <tbody>
               <?php
-              $usuario = ControladorUsuario::ctrInfoUsuarios();
-              foreach ($usuario as $value) {
+              $producto = ControladorProducto::ctrInfoProductos();
+              foreach ($producto as $value) {
               ?>
+              <!-- id_producto	cod_producto	cod_producto_sin	nombre_producto	precio_producto	unidad_medida	unidad_medida_sin	imagen_producto	disponibilidad_producto -->
 
                 <tr>
-                  <td> <?php echo $value["id_usuario"]; ?> </td>
-                  <td> <?php echo $value["login_usuario"]; ?> </td>
-                  <td> <?php echo $value["perfil"]; ?> </td>
+                  <td> <?php echo $value["id_producto"]; ?> </td>
+                  <td> <?php echo $value["cod_producto"]; ?> </td>
+                  <td> <?php echo $value["cod_producto_sin"]; ?> </td>
+                  <td> <?php echo $value["nombre_producto"]; ?> </td>
+                  <td> <?php echo $value["precio_producto"]; ?> </td>
+                  <td> <?php echo $value["unidad_medida"]; ?> </td>
+                  <td> <?php echo $value["unidad_medida_sin"]; ?> </td>
+                  <td> 
+                    <img src="<?php echo $value["imagen_producto"];?>" width=150px height=auto ">
+                </td>
 
                   <td> <?php
-                        if ($value["disonibilidad_producto"] == 1) {
+                        if ($value["disponibilidad_producto"] == 1) {
                         ?>
-                      <span class="badge badge-success">Activo</span>
+                      <span class="badge badge-success">Disponible</span>
                     <?php
                         } else {
                     ?>
-                      <span class="badge badge-danger">Inactivo</span>
+                      <span class="badge badge-danger">No disponible</span>
                     <?php
                         } ?>
                   </td>
-                  <td> <?php echo $value["ultimo_login"]; ?> </td>
-                  <td> <?php echo $value["fecha_registro"]; ?> </td>
+
                   <td>
                     <div class="btn-group">
-                      <button class="btn-secondary" onclick="MEditUsuario(<?php echo $value["id_usuario"]; ?>)">
+                      <button class="btn-secondary" onclick="MEditProducto(<?php echo $value["id_producto"]; ?>)">
                         <i class="fas fa-edit"></i>
                       </button>
-                      <button class="btn-danger" onclick="MEliUsuario(<?php echo $value["id_usuario"]; ?>)">
+                      <button class="btn-danger" onclick="MEliProducto(<?php echo $value["id_producto"]; ?>)">
                         <i class="fas fa-trash"></i>
                       </button>
 

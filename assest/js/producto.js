@@ -1,167 +1,132 @@
-function MNuevoFactura(){
-    $("#modal-default").modal("show");
-   
-    var obj="";
-    $.ajax({
-   
-       type:"POST",
-       url:"vista/factura/FNuevoFactura.php",
-       data: obj,
-       success: function(data) {
-           $("#content-default").html(data);
-       }
-    })
-   }
-
-function regFactura(){
- 
-    var formData=new FormData($("#FRegFactura")[0])
-    if(formData.get("password")==formData.get("vrPassword")){
-
-        $.ajax({
-       
-           type:"POST",
-           url:"controlador/facturaControlador.php?ctrRegFactura",
-           data: formData,
-           cache:false,
-           contentType:false,
-           processData:false,
-           success: function(data) {
-               
-            if(data="ok"){
-
-                Swal.fire({
-                    icon: 'success',
-                    title: "Registro Exitoso",
-                    showConfirmButton: false,
-                    timer: 1000
-                    
-                });
-
-                setTimeout(function(){
-                    location.reload()
-                },1200)
-
-            }
-            else{
-                Swal.fire({
-                    title: "Error",
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 1000
-                    
-                });
-            }
-
-           }
-        })
-
-    }
-
+function MNuevoProducto() {
+  $("#modal-default").modal("show");
+  var obj = "";
+  $.ajax({
+    type: "POST",
+    url: "vista/producto/FNuevoProducto.php",
+    data: obj,
+    success: function (data) {
+      $("#content-default").html(data);
+    },
+  });
 }
 
-function MEditFactura(id){
+function regProducto() {
+  var formData = new FormData($("#FRegProducto")[0]);
 
-    $("#modal-default").modal("show");
-   
-    var obj="";
+$.ajax({
+    type: "POST",
+    url: "controlador/productoControlador.php?ctrRegProducto",
+    data: formData,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (data) {
+      if ((data = "ok")) {
+        Swal.fire({
+          icon: "success",
+          title: "Registro Exitoso De Producto",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        setTimeout(function () {
+          location.reload();
+        }, 1200);
+      } else {
+        Swal.fire({
+          title: "Error de Registro",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    },
+  });
+}
+
+function MEditProducto(id) {
+  $("#modal-default").modal("show");
+
+  var obj = "";
+  $.ajax({
+    type: "POST",
+    url: "vista/producto/FEditProducto.php?id=" + id,
+    data: obj,
+    success: function (data) {
+      $("#content-default").html(data);
+    },
+  });
+} //
+
+
+function editProducto() {
+  var formData = new FormData($("#FEditProducto")[0]);
     $.ajax({
-   
-       type:"POST",
-       url:"vista/factura/FEditFactura.php?id="+id,
-       data: obj,
-       success: function(data) {
-           $("#content-default").html(data);
-       }
-    })
+      type: "POST",
+      url: "controlador/productoControlador.php?ctrEditProducto",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        if ((data = "ok")) {
+          Swal.fire({
+            icon: "success",
+            showConfirmButton: false,
+            title: "Producto Actualizado",
+            timer: 1000,
+          });
 
-
-
-    
-} //final
-function editFactura(){
-
-    var formData=new FormData($("#FEditFactura")[0])
-    if(formData.get("password")==formData.get("vrPassword")){
-
-        $.ajax({
-       
-           type:"POST",
-           url:"controlador/facturaControlador.php?ctrEditFactura",
-           data: formData,
-           cache:false,
-           contentType:false,
-           processData:false,
-           success: function(data) {
-
-            if(data="ok"){
-
-                Swal.fire({
-                    icon: 'success',
-                    showConfirmButton: false,
-                    title: "Factura Actualizado",
-                    timer: 1000
-                    
-                });
-
-                setTimeout(function(){
-                    location.reload()
-                },1200)
-
-            }
-            else{
-                Swal.fire({
-                    title: "Error",
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 1000
-                    
-                });
-            }
-
-           }
-        })
-
-    }
-
-
+          setTimeout(function () {
+            location.reload();
+          }, 1200);
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        }
+      },
+    });
+  
 }
 
 
-function MEliFactura(id){
 
-    var obj={
-        id:id
-    }
 
-Swal.fire({
-    title:"¿Estás seguro de eliminar este factura?",
-    showDenyButton:true,
-    showCancelButton:false,
-    confirmButtonText:'Confirmar',
-    denyButtonText:'Cancelar'
-}).then((result)=>{
-    if(result.isConfirmed){
-        $.ajax({
-            type:"POST",
-            url:"controlador/facturaControlador.php?ctrEliFactura",
-            data:obj,
-            success: function(data) {
-              if(data=="ok"){
-                location.reload()
-              }
-              else{
-                Swal.fire({
-                    icon: 'error',
-                    showConfirmButton: false,
-                    title: 'Error',
-                    text:'El factura no puede ser eliminado',
-                    timer: 1000
-                    
-                });
-              }
-            }
-        })
+function MEliProducto(id) {
+  var obj = {
+    id: id,
+  };
+
+  Swal.fire({
+    title: "¿Estás seguro de eliminar este producto?",
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: "Confirmar",
+    denyButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "POST",
+        url: "controlador/productoControlador.php?ctrEliProducto",
+        data: obj,
+        success: function (data) {
+          if (data == "ok") {
+            location.reload();
+          } else {
+            Swal.fire({
+              icon: "error",
+              showConfirmButton: false,
+              title: "Error",
+              text: "El producto no puede ser eliminado",
+              timer: 1000,
+            });
+          }
+        },
+      });
     }
-})
+  });
 }

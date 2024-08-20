@@ -27,12 +27,13 @@ class ControladorProducto
     static public function ctrRegProducto()
     {
         require "../modelo/productoModelo.php";
-        $data = array("razon_social_producto" => $_POST["razon_social"], "nit_ci_producto" => $_POST["nit_ci"], "direccion_producto" => $_POST["direccion"], "nombre_producto" => $_POST["nombre"], "telefono_producto" => $_POST["telefono"], "email_producto" => $_POST["email"]);
-        var_dump($data);
+        $data = array("codigo_p" => $_POST["codigo_p"], "codigo_p_s" => $_POST["codigo_p_s"], "nombre" => $_POST["nombre"], "precio" => $_POST["precio"], "unidad" => $_POST["unidad"], "unidad_s" => $_POST["unidad_s"], "imagen" => $_FILES["imagen"]["name"], "imagen_temp" => $_FILES["imagen"]["tmp_name"]);
         $respuesta = ModeloProducto::mdlRegProducto($data);
-
         echo $respuesta;
     }
+
+
+
 
     static public function ctrInfoProducto($id)
     {
@@ -49,9 +50,16 @@ class ControladorProducto
     {
         require "../modelo/productoModelo.php";
 
-        $data = array("razon_social_producto" => $_POST["razon_social"], "nit_ci_producto" => $_POST["nit_ci"], "direccion_producto" => $_POST["direccion"], "nombre_producto" => $_POST["nombre"], "telefono_producto" => $_POST["telefono"], "email_producto" => $_POST["email"] , "id_producto" => $_POST["id"]);
 
-        $respuesta= ModeloProducto::mdlEditProducto($data);
+        // se pone una condicional para verificar si se cambio la imagen con respecto a la anterior, en caso de ser null no se actualiza la imagen
+
+        if ($_FILES["imagen"]["name"] == "") {
+            $data = array("id" => $_POST["id"], "codigo_p" => $_POST["codigo_p"], "codigo_p_s" => $_POST["codigo_p_s"], "nombre" => $_POST["nombre"], "precio" => $_POST["precio"], "unidad" => $_POST["unidad"], "unidad_s" => $_POST["unidad_s"], "img" => "null", "dis" => $_POST["disponibilidad"]);
+        } else {
+            $data = array("id" => $_POST["id"], "codigo_p" => $_POST["codigo_p"], "codigo_p_s" => $_POST["codigo_p_s"], "nombre" => $_POST["nombre"], "precio" => $_POST["precio"], "unidad" => $_POST["unidad"], "unidad_s" => $_POST["unidad_s"], "imagen" => $_FILES["imagen"]["name"], "imagen_temp" => $_FILES["imagen"]["tmp_name"], "dis" => $_POST["disponibilidad"]);
+        }
+        var_dump($data);
+        $respuesta = ModeloProducto::mdlEditProducto($data);
         echo $respuesta;
     }
 
