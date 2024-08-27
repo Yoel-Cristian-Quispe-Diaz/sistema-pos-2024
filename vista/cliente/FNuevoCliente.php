@@ -46,12 +46,10 @@
       </div>
     </div>
   </div>
-  <!-- /.card-body -->
-  <div class="card-footer">
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
     <button type="submit" class="btn btn-primary">Guardar</button>
-    <button type="submit" class="btn btn-default float-right">Cancel</button>
   </div>
-  <!-- /.card-footer -->
 </form>
 <script>
   // envia los datos del formulario al controlador

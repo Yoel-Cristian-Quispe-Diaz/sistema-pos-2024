@@ -107,6 +107,12 @@
                     <p>Lista de Productos</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="SinCatalogo" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Sincronizacion Producto</p>
+                  </a>
+                </li>
               </ul>
             </li>
 

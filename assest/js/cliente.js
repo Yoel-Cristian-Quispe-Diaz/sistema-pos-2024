@@ -1,5 +1,5 @@
 function MNuevoCliente() {
-  $("#modal-c").modal("show");
+  $("#modal-default").modal("show");
 
   var obj = "";
   $.ajax({
@@ -7,7 +7,7 @@ function MNuevoCliente() {
     url: "vista/cliente/FNuevoCliente.php",
     data: obj,
     success: function (data) {
-      $("#content-c").html(data);
+      $("#content-default").html(data);
     },
   });
 }
@@ -46,14 +46,14 @@ function regCliente() {
 
 
 function MEditCliente(id) {
-  $("#modal-c").modal("show");
+  $("#modal-default").modal("show");
   var obj = "";
   $.ajax({
     type: "POST",
     url: "vista/cliente/FEditCliente.php?id=" + id,
     data: obj,
     success: function (data) {
-      $("#content-c").html(data);
+      $("#content-default").html(data);
     },
   });
 }

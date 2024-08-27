@@ -64,12 +64,10 @@ $cliente = ControladorCliente::ctrInfoCliente($id);
       </div>
     </div>
   </div>
-  <!-- /.card-body -->
-  <div class="card-footer">
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <button type="submit" class="btn btn-default float-right">Cancel</button>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
   </div>
-  <!-- /.card-footer -->
 </form>
 
 <script>

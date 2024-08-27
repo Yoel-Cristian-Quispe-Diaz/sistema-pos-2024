@@ -6,57 +6,76 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="form-group">
-      <label for="">Codigo De Producto</label>
-      <input type="text" class="form-control" name="codigo_p" id="codigo_p">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="codigo_p">Codigo De Producto</label>
+          <input type="text" class="form-control" name="codigo_p" id="codigo_p">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="miSelect">Codigo de Producto SIN:</label>
+          <select id="miSelect" name="codigo_p_s" class="form-control">
+            <option value="">Cargando........</option>
+          </select>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="">Codigo SIN</label>
-      <input type="text" class="form-control" name="codigo_p_s" id="codigo_p_s">
-    </div>
-    <div class="form-group">
-      <label for="">Nombre</label>
-      <input type="text" class="form-control" name="nombre" id="nombre">
-    </div>
-    <div class="form-group">
-      <label for="">Precio</label>
-      <input type="text" class="form-control" name="precio" id="precio">
-    </div>
-    <div class="form-group">
-      <label for="">Unidad de Medida</label>
-      <input type="text" class="form-control" name="unidad" id="unidad">
-    </div>
-    <div class="form-group">
-      <label for="">Unidad SIN</label>
-      <input type="text" class="form-control" name="unidad_s" id="unidad_s">
-    </div>
-    <div class="form-group">
-      <label for="">Imagen</label>
-      <input type="file" class="form-control" name="imagen" id="imagen" onchange="previewImage(event)">      
-<center>
-<img id="preview" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 150px; margin-top: 20px ;">
-</center>
 
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" name="nombre" id="nombre">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="precio">Precio</label>
+          <input type="text" class="form-control" name="precio" id="precio">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="unidad">Unidad de Medida</label>
+          <input type="text" class="form-control" name="unidad" id="unidad">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="unidad_s">Unidad de Medida SIN</label>
+          <select id="miSelect_medida" name="codigo_p_s" class="form-control">
+            <option value="">Cargando........</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="imagen">Imagen</label>
+          <input type="file" class="form-control" name="imagen" id="imagen" onchange="previsualizar(event)">
+        </div>
+      </div>
+      <div class="col-md-6" style="text-align: center;">
+        <img id="img_pre" src="assest/dist/img/product_default.png" alt="Vista previa de la imagen" style="max-width: 100px; margin: 20px;">
+      </div>
     </div>
   </div>
+
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 </form>
 
+
 <script>
-  function previewImage(event) {
-    var reader = new FileReader();
-    reader.onload = function() {
-      var output = document.getElementById('preview');
-      output.src = reader.result;
-      output.style.display = 'block';
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  }
-
-
   $(function() {
     $.validator.setDefaults({
       submitHandler: function() {

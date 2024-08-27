@@ -46,9 +46,6 @@ class ModeloProducto
     {
         $stmt = Conexion::conectar()->prepare("select * from producto where id_producto=$id");
         $stmt->execute();
-
-        // $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        // var_dump($result); 
         $result = $stmt->fetch();
 
         return $result;

@@ -52,10 +52,10 @@
         </div>
         <!-- /.modal-dialog -->
 </div>
-<div class="modal fade" id="modal-c">
+<div class="modal fade" id="modal-producto">
 
-        <div class="modal-dialog">
-          <div class="modal-content" id="content-c">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" id="content-producto">
 
           </div>
           <!-- /.modal-content -->

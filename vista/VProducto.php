@@ -44,7 +44,7 @@
               <!-- id_producto	cod_producto	cod_producto_sin	nombre_producto	precio_producto	unidad_medida	unidad_medida_sin	imagen_producto	disponibilidad_producto -->
 
                 <tr>
-                  <td> <?php echo $value["id_producto"]; ?> </td>
+                  <td onclick="MVerProducto(<?php echo $value["id_producto"]; ?>)"> <?php echo $value["id_producto"]; ?> </td>
                   <td> <?php echo $value["cod_producto"]; ?> </td>
                   <td> <?php echo $value["cod_producto_sin"]; ?> </td>
                   <td> <?php echo $value["nombre_producto"]; ?> </td>
@@ -52,7 +52,7 @@
                   <td> <?php echo $value["unidad_medida"]; ?> </td>
                   <td> <?php echo $value["unidad_medida_sin"]; ?> </td>
                   <td> 
-                    <img src="<?php echo $value["imagen_producto"];?>" width=150px height=auto ">
+                    <img src="<?php echo $value["imagen_producto"];?>" width=100px height=auto" onclick="MVerProducto(<?php echo $value["id_producto"]; ?>)">
                 </td>
 
                   <td> <?php
@@ -69,9 +69,16 @@
 
                   <td>
                     <div class="btn-group">
+                    <button class="btn-info" onclick="MVerProducto(<?php echo $value["id_producto"]; ?>)">
+                        <i class="fas fa-eye"></i>
+                      </button>
+
+                      
                       <button class="btn-secondary" onclick="MEditProducto(<?php echo $value["id_producto"]; ?>)">
                         <i class="fas fa-edit"></i>
                       </button>
+
+
                       <button class="btn-danger" onclick="MEliProducto(<?php echo $value["id_producto"]; ?>)">
                         <i class="fas fa-trash"></i>
                       </button>
