@@ -16,7 +16,8 @@
           <h3 class="card-title">Sincronizacion de producto</h3></div>
         <!-- /.card-header -->
         <div class="card-body">
-          <table id="example1" class="table table-bordered table-striped">
+        <!-- id="example1" -->
+          <table  class="table table-bordered table-striped">
             <thead>
               <tr>
 
@@ -24,7 +25,7 @@
                 <th>Codigo Actividad</th>
                 <th>Descipcion</th>
                 <td>
-                  <button class="btn btn-primary" style="width: 100%;" onclick="SinCatalogo()">Nuevo</button>
+                  <button class="btn btn-primary" style="width: 100%;" onclick="SinCatalogo()">Sincronizacion</button>
                 </td>
               </tr>
             </thead>
