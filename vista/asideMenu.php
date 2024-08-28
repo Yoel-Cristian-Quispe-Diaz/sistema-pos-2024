@@ -8,7 +8,9 @@
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-
+        <li class="nav-item">
+          <span id="comunicacionSIAT" class="badge badge-danger"> Desconectado </span>
+        </li>
       </ul>
 
       <!-- Right navbar links -->
@@ -72,23 +74,23 @@
 
 
             <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-users  "></i>
-              <p>
-                Clientes
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users  "></i>
+                <p>
+                  Clientes
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
 
-              <li class="nav-item">
-                <a href="VCliente" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Lista de Clientes</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+                <li class="nav-item">
+                  <a href="VCliente" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Lista de Clientes</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
 
             <li class="nav-item">

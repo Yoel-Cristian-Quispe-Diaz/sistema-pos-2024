@@ -1,3 +1,5 @@
+// variable globales
+var host = "http://localhost:5000/";
 function MNuevoFactura() {
   $("#modal-default").modal("show");
 
@@ -129,3 +131,27 @@ function MEliFactura(id) {
     }
   });
 }
+
+function verificarComunicacion() {
+  var obj = "";
+  $.ajax({
+    type: "POST",
+    url: host + "api/CompraVenta/comunicacion",
+    data: obj,
+    cache: false,
+    contentType: "application/json",
+    processData: false,
+    success: function (data) {
+      console.log(data);
+      if (data["transaccion"] == true) {
+        document.getElementById("comunicacionSIAT").innerHTML = "Conectado";
+        document.getElementById("comunicacionSIAT").className = "badge badge-success";
+      }
+    },
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+if (jqXHR.status == 0) {
+  document.getElementById("comunicacionSIAT").innerHTML = "Desconectado";
+  document.getElementById("comunicacionSIAT").className = "badge badge-danger";}
+  });
+}
+setInterval(verificarComunicacion, 5000);
