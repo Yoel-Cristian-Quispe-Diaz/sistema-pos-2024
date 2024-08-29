@@ -46,26 +46,6 @@ class ModeloFactura
         return $result;
     }
 
-    static public function mdlEditFactura($data)
-    {
-
-        // id_factura	razon_social_factura	nit_ci_factura	direccion_factura	nombre_factura	telefono_factura	email_factura
-        $razon_social_factura = $data["razon_social_factura"];
-        $nit_ci_factura = $data["nit_ci_factura"];
-        $direccion_factura = $data["direccion_factura"];
-        $nombre_factura = $data["nombre_factura"];
-        $telefono_factura = $data["telefono_factura"];
-        $email_factura = $data["email_factura"];
-        $id = $data["id_factura"];
-
-        //consulta para actualizar datos
-        $stmt = Conexion::conectar()->prepare("update factura set razon_social_factura='$razon_social_factura', nit_ci_factura='$nit_ci_factura', direccion_factura='$direccion_factura', nombre_factura='$nombre_factura', telefono_factura='$telefono_factura', email_factura='$email_factura' where id_factura=$id");
-        if ($stmt->execute()) {
-            return "ok";
-        } else {
-            return "error";
-        }
-    }
 
     static public function mdlEliFactura($id)
     {
@@ -77,5 +57,13 @@ class ModeloFactura
         } else {
             return "error";
         }
+    }
+
+
+    static function mdlNumFactura()
+    {
+        $stmt = Conexion::conectar()->prepare("select max(id_factura) from factura");
+        $stmt->execute();
+        return $stmt->fetch();;
     }
 }

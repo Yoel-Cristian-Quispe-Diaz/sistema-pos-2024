@@ -7,6 +7,7 @@ if (isset($ruta["query"])) {
     if (
         $ruta["query"] == "ctrRegCliente" ||
         $ruta["query"] == "ctrEditCliente" ||
+        $ruta["query"] == "ctrBusCliente" ||
         $ruta["query"] == "ctrEliCliente"
     ) {
         $metodo = $ruta["query"];
@@ -68,4 +69,17 @@ class ControladorCliente
         $respuesta = ModeloCliente::mdlEliCliente($id);
         echo $respuesta;
     }
-}//final
+
+
+    static function ctrBusCliente(){
+        require "../modelo/clienteModelo.php";
+        $nitCliente=$_POST["nitCliente"];
+        
+        $respuesta=ModeloCliente::mdlBusCliente($nitCliente);
+        echo json_encode($respuesta);
+
+    }
+
+
+
+}

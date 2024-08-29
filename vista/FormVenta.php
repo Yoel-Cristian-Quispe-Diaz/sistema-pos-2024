@@ -56,13 +56,20 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" list="listaClientes" name="nitCliente" id="nitCliente">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="busCliente()">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-
+                        <datalist id="listaClientes">
+                            <?php
+                            $cliente = ControladorCliente::ctrInfoClientes();
+                            foreach ($cliente as $value) {
+                                echo "<option value='{$value["nit_ci_cliente"]}'> {$value["razon_social_cliente"]}</option>";
+                            }
+                            ?>
+                        </datalist>
 
 
                         <div class="form-group col-md-6">

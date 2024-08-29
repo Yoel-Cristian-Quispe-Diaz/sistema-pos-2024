@@ -5,6 +5,11 @@ $ruta = parse_url($_SERVER["REQUEST_URI"]);
 if (isset($ruta["query"])) {
 
     if (
+
+        $ruta["query"] == "ctrNumFactura" ||
+
+
+
         $ruta["query"] == "ctrRegFactura" ||
         $ruta["query"] == "ctrEditFactura" ||
         $ruta["query"] == "ctrEliFactura"
@@ -44,22 +49,6 @@ class ControladorFactura
     }
 
 
-
-
-
-
-    static function ctrEditFactura()
-    {
-        require "../modelo/facturaModelo.php";
-
-        $data = array("razon_social_factura" => $_POST["razon_social"], "nit_ci_factura" => $_POST["nit_ci"], "direccion_factura" => $_POST["direccion"], "nombre_factura" => $_POST["nombre"], "telefono_factura" => $_POST["telefono"], "email_factura" => $_POST["email"] , "id_factura" => $_POST["id"]);
-
-        $respuesta= ModeloFactura::mdlEditFactura($data);
-        echo $respuesta;
-    }
-
-
-
     static function ctrEliFactura()
     {
         require "../modelo/facturaModelo.php";
@@ -68,4 +57,15 @@ class ControladorFactura
         $respuesta = ModeloFactura::mdlEliFactura($id);
         echo $respuesta;
     }
-}//final
+
+    static function ctrNumFactura()
+    {
+        require "../modelo/facturaModelo.php";
+        $respuesta = ModeloFactura::mdlNumFactura();
+        if ($respuesta[0] == null) {
+            echo "1";
+        }else{
+            echo $respuesta[0]+1;
+        }
+    }
+}
