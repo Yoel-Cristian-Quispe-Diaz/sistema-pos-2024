@@ -8,7 +8,7 @@ $producto = ControladorProducto::ctrInfoProducto($id);
 
 ?>
 
-<div class="modal-header bg-info">
+<div class="modal-header bg-success">
     <h4 class="modal-title">Informacion de producto</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -81,5 +81,13 @@ $producto = ControladorProducto::ctrInfoProducto($id);
 
 <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-    <button type="submit" class="btn btn-primary">Guardar</button>
+
+<div>    <button class="btn-secondary" onclick="MEditProducto(<?php echo $producto["id_producto"]; ?>)">
+        <i class="fas fa-edit"></i>
+    </button>
+
+
+    <button class="btn-danger" onclick="MEliProducto(<?php echo $producto["id_producto"]; ?>)">
+        <i class="fas fa-trash"></i>
+    </button></div>
 </div>

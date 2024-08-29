@@ -1,5 +1,5 @@
 <form action="" id="FRegProducto">
-  <div class="modal-header">
+  <div class="modal-header bg-info">
     <h4 class="modal-title">Registro Nuevo Producto</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -16,9 +16,12 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="miSelect">Codigo de Producto SIN:</label>
-          <select id="miSelect" name="codigo_p_s" class="form-control">
-            <option value="">Cargando........</option>
-          </select>
+          <input type="text" list="cod_sin" name="codigo_p_s" class="form-control">
+          <datalist id="cod_sin">
+          </datalist>
+
+
+
         </div>
       </div>
     </div>
@@ -48,9 +51,10 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="unidad_s">Unidad de Medida SIN</label>
-          <select id="miSelect_medida" name="codigo_p_s" class="form-control">
-            <option value="">Cargando........</option>
-          </select>
+          <input type="text" name="unidad_s" list="medida_sin" class="form-control">
+          <datalist id="medida_sin" style="position: absolute;">
+          </datalist>
+
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 function MNuevoProducto() {
   $("#modal-producto").modal("show");
-  catalogo();
-  medidas();
+  codigoFormProducto();
+  medidaFormProducto();
 
   var obj = "";
   $.ajax({
@@ -49,8 +49,8 @@ function regProducto() {
 
 function MEditProducto(id) {
   $("#modal-producto").modal("show");
-  catalogo();
-  medidas();
+  codigoFormProducto();
+  medidaFormProducto();
   var obj = "";
   $.ajax({
     type: "POST",
@@ -130,7 +130,7 @@ function MEliProducto(id) {
   });
 }
 
-function catalogo() {
+function codigoFormProducto() {
   var objeto = {
     codigoAmbiente: 2,
     codigoPuntoVenta: 0,
@@ -148,25 +148,13 @@ function catalogo() {
     cache: false,
     contentType: "application/json",
     success: function (data) {
-      console.log(data);
-
-      // Limpiar el select antes de llenarlo
-      $('#miSelect').empty();
-      $('#miSelect').append('<option value="" selected disabled style="color: red;">Seleccione un Codigo Producto SIN</option>');
-
-      // for (var i = 0; i < data["listaCodigos"].length; i++) {
-      //   $('#miSelect').append(
-      //     '<option value="' + data["listaCodigos"][i]["codigoProducto"] + '">' +
-      //     data["listaCodigos"][i]["descripcionProducto"] +
-      //     '</option>'
-      //   );
-      // }
+      var datalist=document.getElementById("cod_sin");
+/* agrega los datos en el datalist */
       for (var i = 0; i < data["listaCodigos"].length; i++) {
-        $('#miSelect').append(
-          '<option value="' + data["listaCodigos"][i]["codigoProducto"] + '"  title ="'+ data["listaCodigos"][i]["descripcionProducto"] + '" >' +
-          data["listaCodigos"][i]["codigoProducto"] +
-          '</option>'
-        );
+        var option=document.createElement("option");
+        option.value=data["listaCodigos"][i]["codigoProducto"];
+        option.textContent=data["listaCodigos"][i]["descripcionProducto"];
+        datalist.appendChild(option);
       }
 
 
@@ -177,7 +165,7 @@ function catalogo() {
   });
 }
 
-function medidas() {
+function medidaFormProducto() {
   var objeto = {
     codigoAmbiente: 2,
     codigoPuntoVenta: 0,
@@ -195,25 +183,14 @@ function medidas() {
     cache: false,
     contentType: "application/json",
     success: function (data) {
-      console.log(data);
-      // Limpiar el select antes de llenarlo
-      $('#miSelect_medida').empty();
-      $('#miSelect_medida').append('<option value="" selected disabled style="color: red;">Seleccione nueva medida</option>');
-
-      // for (var i = 0; i < data["listaCodigos"].length; i++) {
-      //   $('#miSelect').append(
-      //     '<option value="' + data["listaCodigos"][i]["codigoProducto"] + '">' +
-      //     data["listaCodigos"][i]["descripcionProducto"] +
-      //     '</option>'
-      //   );
-      // }
+      var datalist=document.getElementById("medida_sin");
       for (var i = 0; i < data["listaCodigos"].length; i++) {
-        $('#miSelect_medida').append(
-          '<option value="' + data["listaCodigos"][i]["codigoClasificador"] + '"  title ="'+ data["listaCodigos"][i]["codigoClasificador"] + '" >' +
-          data["listaCodigos"][i]["descripcion"] +
-          '</option>'
-        );
+        var option=document.createElement("option");
+        option.value=data["listaCodigos"][i]["codigoClasificador"] ;
+        option.textContent=data["listaCodigos"][i]["descripcion"];
+        datalist.appendChild(option);
       }
+
     },
   });
 }
