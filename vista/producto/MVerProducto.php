@@ -55,8 +55,6 @@ $producto = ControladorProducto::ctrInfoProducto($id);
                         } else {
                             echo '<span class="badge badge-danger">No Disponible</span>';
                         }
-
-
                         ?></td>
                 </tr>
             </table>

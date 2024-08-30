@@ -7,6 +7,7 @@ if (isset($ruta["query"])) {
     if (
         $ruta["query"] == "ctrRegProducto" ||
         $ruta["query"] == "ctrEditProducto" ||
+        $ruta["query"] == "ctrDatosProducto" ||
         $ruta["query"] == "ctrEliProducto"
     ) {
         $metodo = $ruta["query"];
@@ -41,16 +42,9 @@ class ControladorProducto
         return $respuesta;
     }
 
-
-
-
-
-
-    static function ctrEditProducto()
+    static public  function ctrEditProducto()
     {
         require "../modelo/productoModelo.php";
-
-
         // se pone una condicional para verificar si se cambio la imagen con respecto a la anterior, en caso de ser null no se actualiza la imagen
 
         if ($_FILES["imagen"]["name"] == "") {
@@ -65,7 +59,7 @@ class ControladorProducto
 
 
 
-    static function ctrEliProducto()
+    static public function ctrEliProducto()
     {
         require "../modelo/productoModelo.php";
         $id = $_POST["id"];
@@ -73,4 +67,16 @@ class ControladorProducto
         $respuesta = ModeloProducto::mdlEliProducto($id);
         echo $respuesta;
     }
-}//final
+
+    static public function ctrDatosProducto()
+   {
+    require "../modelo/productoModelo.php";
+    $codProducto=$_POST["codProducto"];
+    $respuesta=ModeloProducto::mdlDatosProducto($codProducto);
+    echo json_encode($respuesta);
+   } 
+
+
+
+
+}

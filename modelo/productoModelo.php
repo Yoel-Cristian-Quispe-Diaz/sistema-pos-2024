@@ -104,4 +104,12 @@ class ModeloProducto
             return "error";
         }
     }
+    static public function mdlDatosProducto($codProducto){
+        $stmt=Conexion::conectar()->prepare("select * from producto where cod_producto='$codProducto'");
+        $stmt->execute();
+        return $stmt->fetch();
+
+
+        
+    }
 }

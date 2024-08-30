@@ -74,3 +74,85 @@ function emitirFactura() {
       }
   });
 }
+
+
+
+/* ==========
+Rellenar datos de  Producto
+========== */
+
+function datosProducto(){
+  let codProducto=document.getElementById("codProducto").value;
+  var obj={
+    codProducto:codProducto,
+  };
+  // console.log(obj);
+  $.ajax({
+    type:"POST",
+    url:"controlador/productoControlador.php?ctrDatosProducto",
+    data:obj,
+    dataType:"json",
+    success:function(data){
+      console.log(data);
+      document.getElementById("conceptoPro").value=data["nombre_producto"];
+      document.getElementById("uniMedida").value=data["unidad_medida"];
+      document.getElementById("preUnitario").value=data["precio_producto"];
+
+    }
+  });
+
+  }
+  function calculartotal(){
+    var cantidad=document.getElementById("cantProducto").value;
+    var precio=document.getElementById("preUnitario").value; 
+    var descuento=document.getElementById("descProducto").value;
+    cantidad=parseInt(cantidad);
+    precio=parseFloat(precio);
+
+/* =========
+mi formulario tiene un campo de descuento que puede ser en porcentaje o en cantidad
+========== */
+    if (descuento.includes("%")){
+      descuento=descuento.replace(/%/g,"");
+      descuento=parseInt(descuento);
+      descuento=descuento/100;
+    precio=precio*descuento;
+    }else{
+      descuento=parseFloat(descuento);
+    precio=precio-descuento;
+    }
+    var total=cantidad*precio;
+    document.getElementById("preTotal").value=total;
+  
+  }
+
+
+
+  /* ==========
+  arreglo para el carrito
+  ============= */
+var arregloCarrito=[];
+  function agregarCarrito(){
+    var codProducto=document.getElementById("codProducto").value;
+    var conceptoPro=document.getElementById("conceptoPro").value;
+    var uniMedida=document.getElementById("uniMedida").value;
+    var cantProducto=document.getElementById("cantProducto").value;
+    var preUnitario=document.getElementById("preUnitario").value;
+    var descProducto=document.getElementById("descProducto").value;
+    var preTotal=document.getElementById("preTotal").value;
+
+    var obj={
+      codProducto:codProducto,
+      conceptoPro:conceptoPro,
+      uniMedida:uniMedida,
+      cantProducto:cantProducto,
+      preUnitario:preUnitario,
+      descProducto:descProducto,
+      preTotal:preTotal
+    };
+    arregloCarrito.push(obj);
+    console.log(arregloCarrito);
+    mostrarCarrito();
+
+  }
+

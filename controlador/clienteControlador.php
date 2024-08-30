@@ -49,7 +49,7 @@ class ControladorCliente
 
 
 
-    static function ctrEditCliente()
+    static public function ctrEditCliente()
     {
         require "../modelo/clienteModelo.php";
 
@@ -61,7 +61,7 @@ class ControladorCliente
 
 
 
-    static function ctrEliCliente()
+    static public function ctrEliCliente()
     {
         require "../modelo/clienteModelo.php";
         $id = $_POST["id"];
@@ -71,7 +71,7 @@ class ControladorCliente
     }
 
 
-    static function ctrBusCliente(){
+    static public function ctrBusCliente(){
         require "../modelo/clienteModelo.php";
         $nitCliente=$_POST["nitCliente"];
         

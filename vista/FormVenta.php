@@ -60,16 +60,17 @@
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
+                                <datalist id="listaClientes">
+                                    <?php
+                                    $cliente = ControladorCliente::ctrInfoClientes();
+                                    foreach ($cliente as $value) {
+                                        echo "<option value='{$value["nit_ci_cliente"]}'> {$value["razon_social_cliente"]}</option>";
+                                    }
+                                    ?>
+                                </datalist>
                             </div>
                         </div>
-                        <datalist id="listaClientes">
-                            <?php
-                            $cliente = ControladorCliente::ctrInfoClientes();
-                            foreach ($cliente as $value) {
-                                echo "<option value='{$value["nit_ci_cliente"]}'> {$value["razon_social_cliente"]}</option>";
-                            }
-                            ?>
-                        </datalist>
+
 
 
                         <div class="form-group col-md-6">
@@ -142,24 +143,34 @@
                     </button>
                 </div>
             </div>
+
+
+
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-md-2">
                         <label for="">Cod. Producto</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="codProducto" id="codProducto">
+                            <input type="text" list="codigoProducto" class="form-control" name="codProducto" id="codProducto">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">
+                                <button class="btn btn-outline-secondary" type="button" onclick="datosProducto()">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
+                            <datalist id="codigoProducto">
+                                <?php
+                                $producto = ControladorProducto::ctrInfoProductos();
+                                foreach ($producto as $value) {
+                                    echo "<option value='{$value["cod_producto"]}'> {$value["nombre_producto"]}</option>";
+                                }
+                                ?>
                         </div>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="">Concepto</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="conceptoPro" id="conceptoPro">
+                            <input type="text" class="form-control" name="conceptoPro" id="conceptoPro" readonly>
                         </div>
                     </div>
 
@@ -169,7 +180,7 @@
                     <div class="form-group col-md-1">
                         <label for="">Cantidad</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="cantProducto" id="cantProducto">
+                            <input type="text" class="form-control" name="cantProducto" id="cantProducto" onkeyup="calculartotal()">
                         </div>
                     </div>
 
@@ -185,14 +196,14 @@
                     <div class="form-group col-md-1">
                         <label for="">P. Unit</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="preUnitario" id="preUnitario">
+                            <input type="number" class="form-control" name="preUnitario" id="preUnitario" readonly value="0">
                         </div>
                     </div>
 
                     <div class="form-group col-md-1">
                         <label for="">Descuento</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="descProducto" id="descProducto">
+                            <input type="text" class="form-control" name="descProducto" value="0.00" id="descProducto" onkeyup="calculartotal()">
                         </div>
                     </div>
 
@@ -200,7 +211,7 @@
                     <div class="form-group col-md-1">
                         <label for="">P. Total</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="preTotal" id="preTotal">
+                            <input type="text" class="form-control" name="preTotal" id="preTotal" value="0.00" readonly>
                         </div>
                     </div>
 
@@ -208,16 +219,35 @@
                     <div class="form-group col-md-1">
                         <label for="">&nbsp;</label>
                         <div class="input-group form-group">
-                            <button class="btn btn-info btn-circle form-control">
+                            <button class="btn btn-info btn-circle form-control" onclick="agregarCarrito()">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-            <div class="card-footer"></div>
+            <div class="card-footer">
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Descripcion</th>
+            <th>Descuento</th>
+            <th>Precio Total</th>
+            <th>Precio Total</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody id="listaDetalle">
+
+    </tbody>
+</table>
+
+
+
+
+            </div>
         </div>
     </div>
     <!-- /.content -->
