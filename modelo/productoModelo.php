@@ -17,20 +17,20 @@ class ModeloProducto
     static public function mdlRegProducto($data)
     {
         // $data = array("codigo_p" => $_POST["codigo_p"], "codigo_p_s" => $_POST["codigo_p_s"], "nombre" => $_POST["nombre"], "precio" => $_POST["precio"], "unidad" => $_POST["unidad"], "unidad_s" => $_POST["unidad_s"], "imagen" => $_POST["imagen"]);
-        
+
         $codigo_p = $data["codigo_p"];
         $codigo_p_s = $data["codigo_p_s"];
-        $nombre = $data["nombre"];  
-        $precio = $data["precio"];  
-        $unidad = $data["unidad"];  
-        $unidad_s = $data["unidad_s"];  
-        $imagen = $data["imagen"];  
+        $nombre = $data["nombre"];
+        $precio = $data["precio"];
+        $unidad = $data["unidad"];
+        $unidad_s = $data["unidad_s"];
+        $imagen = $data["imagen"];
         $tpm_name = $data["imagen_temp"];
 
         if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-            $carpeta="../assest/dist/img/productos/";
-            move_uploaded_file($tpm_name, $carpeta.$imagen);
-            $ruta_imagen="assest/dist/img/productos/".$imagen;
+            $carpeta = "../assest/dist/img/productos/";
+            move_uploaded_file($tpm_name, $carpeta . $imagen);
+            $ruta_imagen = "assest/dist/img/productos/" . $imagen;
         } else {
             $ruta_imagen = " ";
         }
@@ -56,13 +56,13 @@ class ModeloProducto
 
         $codigo_p = $data["codigo_p"];
         $codigo_p_s = $data["codigo_p_s"];
-        $nombre = $data["nombre"];  
-        $precio = $data["precio"];  
-        $unidad = $data["unidad"];  
-        $unidad_s = $data["unidad_s"];  
-        $imagen = $data["imagen"];  
+        $nombre = $data["nombre"];
+        $precio = $data["precio"];
+        $unidad = $data["unidad"];
+        $unidad_s = $data["unidad_s"];
+        $imagen = $data["imagen"];
         $tpm_name = $data["imagen_temp"];
-        $disponibilidad=$data["dis"];
+        $disponibilidad = $data["dis"];
         $id = $data["id"];
 
         //consulta para actualizar datos
@@ -75,11 +75,11 @@ class ModeloProducto
             } else {
                 return "error";
             }
-        } else{
+        } else {
             if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                $carpeta="../assest/dist/img/productos/";
-                move_uploaded_file($tpm_name, $carpeta.$imagen);
-                $ruta_imagen="assest/dist/img/productos/".$imagen;
+                $carpeta = "../assest/dist/img/productos/";
+                move_uploaded_file($tpm_name, $carpeta . $imagen);
+                $ruta_imagen = "assest/dist/img/productos/" . $imagen;
             } else {
                 $ruta_imagen = " ";
             }
@@ -90,7 +90,6 @@ class ModeloProducto
                 return "error";
             }
         }
-        
     }
 
     static public function mdlEliProducto($id)
@@ -104,12 +103,10 @@ class ModeloProducto
             return "error";
         }
     }
-    static public function mdlDatosProducto($codProducto){
-        $stmt=Conexion::conectar()->prepare("select * from producto where cod_producto='$codProducto'");
+    static public function mdlDatosProducto($codProducto)
+    {
+        $stmt = Conexion::conectar()->prepare("select * from producto where cod_producto='$codProducto'");
         $stmt->execute();
         return $stmt->fetch();
-
-
-        
     }
 }

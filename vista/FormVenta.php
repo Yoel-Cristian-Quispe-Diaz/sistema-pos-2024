@@ -36,9 +36,9 @@
 
                         <div class="form-group col-md-3">
                             <label for="">Actividad economica</label>
-                            <select name="actEconomica" id="actEconomica" class="form-control">
-                                <option value="106140">Servicios de comercio</option>
+                            <select name="actEconomica" id="actEconomica" class="form-control" >
                             </select>
+
                         </div>
 
                         <div class="form-group col-md-3">
@@ -151,6 +151,9 @@
                     <div class="form-group col-md-2">
                         <label for="">Cod. Producto</label>
                         <div class="input-group form-group">
+                            <input type="hidden" list="codigoProducto" class="form-control" name="codProducto" id="codProductoSin">
+
+
                             <input type="text" list="codigoProducto" class="form-control" name="codProducto" id="codProducto">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" onclick="datosProducto()">
@@ -180,7 +183,7 @@
                     <div class="form-group col-md-1">
                         <label for="">Cantidad</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="cantProducto" id="cantProducto" onkeyup="calculartotal()">
+                            <input type="text" class="form-control" name="cantProducto" id="cantProducto" value="0" onkeyup="calculartotal()">
                         </div>
                     </div>
 
@@ -188,7 +191,9 @@
                     <div class="form-group col-md-1">
                         <label for="">U. Medida</label>
                         <div class="input-group form-group">
-                            <input type="text" class="form-control" name="uniMedida" id="uniMedida">
+                        <input type="hidden" class="form-control" name="uniMedida" id="uniMedidaSin">
+                        
+                        <input type="text" class="form-control" name="uniMedida" id="uniMedida">
                         </div>
                     </div>
 
@@ -230,11 +235,10 @@
 <table class="table">
     <thead>
         <tr>
+        <th>Descripcion</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
-            <th>Descripcion</th>
             <th>Descuento</th>
-            <th>Precio Total</th>
             <th>Precio Total</th>
             <th>&nbsp;</th>
         </tr>
