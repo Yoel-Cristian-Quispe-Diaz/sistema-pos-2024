@@ -1,5 +1,16 @@
-// variable globales
+/*====================
+   variables globales
+====================*/
 var host = "http://localhost:5000/";
+var codSistema = "775FA42BE90F7B78EF98F8F57";
+var cuis = "9272DC05";
+var nitEmpresa = 338794023;
+var rsEmpresa = "NEOMAC SRL";
+var telEmpresa = "79422560";
+var dirEmpresa =
+  "Calle Pucara 129 AVENIDA 7MO ANILLO NRO. 7550 ZONA/BARRIO: TIERRAS NUEVAS UV: 0135 MZA: 007";
+var token =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTdXBlcmYyhvMzMiLcjJbZ29TaxNOZW1hIjoINzc1RkE0MkJFOTBGN0I3OEY0bGNTciLCJuaXQiOjIINNHQUFBQUFBQURE0ydG9DM05ERXdNZ1lBOFFXMzNRa0FBQU E9IiwiaWQiOjYxODYwOciZxhWJoxMzNZOTYxNjAwLCJpYXQiOjE3MDI0Tc2NjAsIJ msJniNnNpC3rlbWEiOjJTRkUiFQ.4k_pQUXnIhgI5ymmXoyL43i0pSk3uKCgLMkmQ UX_FNYZWQBYrX6pWld-1w";
 
 function verificarComunicacion() {
   var obj = "";
@@ -28,8 +39,6 @@ function verificarComunicacion() {
 }
 setInterval(verificarComunicacion, 5000);
 
-
-
 codigoActividad();
 function codigoActividad() {
   var objeto = {
@@ -50,19 +59,16 @@ function codigoActividad() {
     contentType: "application/json",
     success: function (data) {
       console.log(data);
-      var codigosActiviades=document.getElementById("actEconomica");
+      var codigosActiviades = document.getElementById("actEconomica");
       for (var i = 0; i < data["listaCodigos"].length; i++) {
-
         var option = document.createElement("option");
         option.value = data["listaCodigos"][i]["codigoActividad"];
-        option.textContent=data["listaCodigos"][i]["codigoActividad"];
+        option.textContent = data["listaCodigos"][i]["codigoActividad"];
         codigosActiviades.appendChild(option);
       }
     },
   });
 }
-
-
 
 function busCliente() {
   let nitCliente = document.getElementById("nitCliente").value;
@@ -84,29 +90,28 @@ function busCliente() {
       }
 
       document.getElementById("rsCliente").value = data["razon_social_cliente"];
-      emitirFactura();
+      numFactura();
     },
   });
 }
 
 /* ===========
-generar factura
+generar numero de factura
 =========== */
-function emitirFactura() {
-  console.log("emitir factura");
-  let obj = ""; // No se está enviando ningún dato en 'obj', lo cual está bien si no se necesita.
+function numFactura() {
+  let obj = "";
 
   $.ajax({
     type: "POST",
     url: "controlador/facturaControlador.php?ctrNumFactura",
-    data: obj, // Si no necesitas enviar datos, puedes omitir esta línea.
+    data: obj,
     success: function (data) {
       document.getElementById("numFactura").value = data;
-      console.log("Respuesta recibida:", data); // Verifica que esta línea se esté ejecutando
+      console.log("Respuesta recibida:", data);
     },
     error: function (xhr, status, error) {
-      console.error("Error en la solicitud:", status, error); // Captura y muestra cualquier error
-      console.error("Respuesta del servidor:", xhr.responseText); // Muestra la respuesta completa del servidor si hay un error
+      console.error("Error en la solicitud:", status, error);
+      console.error("Respuesta del servidor:", xhr.responseText);
     },
   });
 }
@@ -197,21 +202,30 @@ function agregarCarrito() {
   console.log(obj);
   arregloCarrito.push(obj);
   dibujarTablaCarrito();
-
-
-
-
   /* =====
   vaciar el formulario de carrito
   ===== */
-  
-  document.getElementById("codProducto").value="";
-  document.getElementById("conceptoPro").value="";
-  document.getElementById("uniMedida").value="";
-  document.getElementById("cantProducto").value="0";
-  document.getElementById("preUnitario").value="";
-  document.getElementById("descProducto").value="0.0";
-  document.getElementById("preTotal").value="0.0";
+
+  document.getElementById("codProducto").value = "";
+  document.getElementById("conceptoPro").value = "";
+  document.getElementById("uniMedida").value = "";
+  document.getElementById("cantProducto").value = "0";
+  document.getElementById("preUnitario").value = "";
+  document.getElementById("descProducto").value = "0.0";
+  document.getElementById("preTotal").value = "0.0";
+}
+
+function carritoTotal() {
+  let totalCarrito = 0;
+  for (var i = 0; i < arregloCarrito.length; i++) {
+    totalCarrito += parseFloat(arregloCarrito[i].subTotal);
+  }
+  document.getElementById("subTotal").value = totalCarrito;
+  let descuentoTotal = parseFloat(
+    document.getElementById("descAdicional").value
+  );
+  let totApagar = totalCarrito - descuentoTotal;
+  document.getElementById("totApagar").value = totApagar;
 }
 
 function dibujarTablaCarrito() {
@@ -237,6 +251,7 @@ function dibujarTablaCarrito() {
     fila.appendChild(tdEliminar);
     listaDetalle.appendChild(fila);
   });
+  carritoTotal();
 }
 
 function eliminarDetalle(codigoProducto) {
@@ -246,4 +261,62 @@ function eliminarDetalle(codigoProducto) {
     }
   });
   dibujarTablaCarrito();
+}
+
+function emitirFactura() {
+  /*   id_factura	cod_factura	id_cliente	detalle	neto	descuento	total	fecha_emision	cufd	cuf	xml	id_punto_venta	id_usuario	usuario	leyenda	 */
+  let date = new Date();
+  let numFactura = parseInt(document.getElementById("numFactura").value);
+  let fechaFactura = date.toISOString();
+  let rsCliente = document.getElementById("rsCliente").value;
+  let tpDocumento = parseInt(document.getElementById("tpDocumento").value);
+  let nitCliente = document.getElementById("nitCliente").value;
+  let metPago = parseInt(document.getElementById("metPago").value);
+  let totAPagar = parseFloat(document.getElementById("totApagar").value);
+  let descAdicional = parseFloat(document.getElementById("descAdicional").value);
+  let subTotal = parseFloat(document.getElementById("subTotal").value);
+  let usuarioLogin = document.getElementById("usuarioLogin").innerHTML;
+
+  let actEconomica = document.getElementById("actEconomica").value;
+  let emailCliente = document.getElementById("emailCliente").value;
+
+  var obj = {
+    codigoAmbiente: 2,
+    codigoDocumentoSector: 1,
+    codigoEmision: 1,
+    codigoModalidad: 2,
+    codigoPuntoVenta: 0,
+    codigoPuntoVentaSpecified: true,
+    codigoSistema: codSistema,
+    codigoSucursal: 0,
+    cufd: "",
+    cuis: cuis,
+    nit: nitEmpresa,
+    tipoFacturaDocumento: 1,
+    archivo: null,
+    fechaEnvio: fechaFactura,
+    hashArchivo: "",
+    codigoControl: "",
+    factura: {
+      cabecera: {
+        nitEmisor: nitEmpresa,
+        razonSocialEmisor: rsEmpresa,
+        municipio: "Santa Cruz",
+        telefono: telEmpresa,
+        numeroFactura: numFactura,
+        cuf: "String",
+        cufd: "",
+        codigoSucursal: 0,
+        direccion: dirEmpresa,
+        codigoPuntoVenta: 0,
+        fechaEmision: fechaFactura,
+        nombreRazonSocial: rsCliente,
+      },
+      detalle: {},
+    },
+  };
+
+
+  console.log(obj);
+  
 }

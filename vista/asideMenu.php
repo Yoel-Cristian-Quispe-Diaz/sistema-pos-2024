@@ -42,8 +42,7 @@
             <img src="assest/dist/img/user_default.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Yoel Cristian Quispe</a>
-            <span class="d-block text-muted">Ing. Informático</span>
+            <a href="#" class="d-block"><?php   echo $_SESSION["login"];   ?>  </a>
           </div>
         </div>
 
