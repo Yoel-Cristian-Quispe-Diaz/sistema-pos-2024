@@ -12,6 +12,12 @@ var dirEmpresa =
 var token =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTdXBlcmYyhvMzMiLcjJbZ29TaxNOZW1hIjoINzc1RkE0MkJFOTBGN0I3OEY0bGNTciLCJuaXQiOjIINNHQUFBQUFBQURE0ydG9DM05ERXdNZ1lBOFFXMzNRa0FBQU E9IiwiaWQiOjYxODYwOciZxhWJoxMzNZOTYxNjAwLCJpYXQiOjE3MDI0Tc2NjAsIJ msJniNnNpC3rlbWEiOjJTRkUiFQ.4k_pQUXnIhgI5ymmXoyL43i0pSk3uKCgLMkmQ UX_FNYZWQBYrX6pWld-1w";
 
+var cufd;
+var codControlCufd;
+var fechaVigCufd;
+
+codigoActividad();
+
 function verificarComunicacion() {
   var obj = "";
   $.ajax({
@@ -39,7 +45,6 @@ function verificarComunicacion() {
 }
 setInterval(verificarComunicacion, 5000);
 
-codigoActividad();
 function codigoActividad() {
   var objeto = {
     codigoAmbiente: 2,
@@ -58,7 +63,6 @@ function codigoActividad() {
     cache: false,
     contentType: "application/json",
     success: function (data) {
-      console.log(data);
       var codigosActiviades = document.getElementById("actEconomica");
       for (var i = 0; i < data["listaCodigos"].length; i++) {
         var option = document.createElement("option");
@@ -82,7 +86,6 @@ function busCliente() {
     data: obj,
     dataType: "json",
     success: function (data) {
-      console.log(data);
       if (data["email_cliente" == ""]) {
         document.getElementById("emailCliente").value = "";
       } else {
@@ -107,7 +110,7 @@ function numFactura() {
     data: obj,
     success: function (data) {
       document.getElementById("numFactura").value = data;
-      console.log("Respuesta recibida:", data);
+      // console.log("Respuesta recibida:", data);
     },
     error: function (xhr, status, error) {
       console.error("Error en la solicitud:", status, error);
@@ -132,7 +135,6 @@ function datosProducto() {
     data: obj,
     dataType: "json",
     success: function (data) {
-      console.log(data);
       document.getElementById("conceptoPro").value = data["nombre_producto"];
       document.getElementById("uniMedida").value = data["unidad_medida"];
       document.getElementById("preUnitario").value = data["precio_producto"];
@@ -199,7 +201,6 @@ function agregarCarrito() {
     montoDescuento: descProducto,
     subTotal: preTotal,
   };
-  console.log(obj);
   arregloCarrito.push(obj);
   dibujarTablaCarrito();
   /* =====
@@ -213,6 +214,116 @@ function agregarCarrito() {
   document.getElementById("preUnitario").value = "";
   document.getElementById("descProducto").value = "0.0";
   document.getElementById("preTotal").value = "0.0";
+}
+
+/*
+funcion obtener CUFD
+*/
+function solicitudCufd() {
+  return new Promise(resolve, reject);
+  var obj = {
+    codigoAmbiente: 2,
+    codigoModalidad: 2,
+    codigoPuntoVenta: 0,
+    codigoPuntoVentaSpecified: true,
+    codigoSistema: codSistema,
+    codigoSucursal: 0,
+    nit: nitEmpresa,
+    cuis: cuis,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: host + "api/Codigos/solicitudCufd?token=" + token,
+    data: JSON.stringify(obj),
+    cache: false,
+    contentType: "application/json",
+    success: function (data) {
+      //console.log(data)
+      cufd = data["codigo"];
+      codControlCufd = data["codigoControl"];
+      fechaVigCufd = data["fechaVigencia"];
+
+      resolve(cufd);
+    },
+  });
+}
+
+/*============
+funcion registrar  CUFD 
+============*/
+function registrarNuevoCufd() {
+  solicitudCufd.then((ok) => {
+    if (ok != "" || ok != null) {
+      var obj = {
+        cufd: cufd,
+        fechaVigCufd: fechaVigCufd,
+        codControlCufd: codControlCufd,
+      };
+
+      $.ajax({
+        type: "POST",
+        data: obj,
+        url: "controlador/facturaControlador.php?ctrNuevoCufd",
+        cache: false,
+
+
+        success: function (data) {
+          $("#panelInfo").before(
+            "<span class='text-primary'>CUFD registrado!!!</span><br>"
+          );
+        },
+        error: function (xhr, status, error) {
+          $("#panelInfo").before(
+            "<span class='text-danger'>Error al registrar CUFD!!!</span><br>"
+          );
+        }
+
+
+
+
+
+      });
+    }
+  });
+}
+/*============
+funcion para verificar vigenciacufd
+============*/
+function verificarVigenciaCufd() {
+  let date = new Date();
+  var obj = "";
+  $.ajax({
+    type: "POST",
+    url: "controlador/facturaControlador.php?ctrUltimoCufd",
+    data: obj,
+    cache: false,
+    dataType: "json",
+    success: function (data) {
+      let vigCufdActual = new Date(data["fecha_vigencia"]);
+      if (date.getTime() > vigCufdActual.getTime()) {
+        $("#panelInfo").before(
+          "<span class='text-warning'>CUFD CADUCADO!!!</span><br>"
+        );
+        $("#panelInfo").before("<span>Registrando cufd...</span><br>");
+
+
+        
+      } else {
+        $("#panelInfo").before(
+          "<span class='text-success'>CUFD Vigente, puede facturarar!!!</span><br>"
+        );
+
+        /* 
+
+        cufd=data["codigo_cufd"]
+        codControlCufd=data["codigo_control"]
+        fechaVigCufd=data["fecha_vigencia"] 
+        
+        */
+      }
+    },
+  });
 }
 
 function carritoTotal() {
@@ -265,6 +376,7 @@ function eliminarDetalle(codigoProducto) {
 
 function emitirFactura() {
   /*   id_factura	cod_factura	id_cliente	detalle	neto	descuento	total	fecha_emision	cufd	cuf	xml	id_punto_venta	id_usuario	usuario	leyenda	 */
+
   let date = new Date();
   let numFactura = parseInt(document.getElementById("numFactura").value);
   let fechaFactura = date.toISOString();
@@ -273,7 +385,9 @@ function emitirFactura() {
   let nitCliente = document.getElementById("nitCliente").value;
   let metPago = parseInt(document.getElementById("metPago").value);
   let totAPagar = parseFloat(document.getElementById("totApagar").value);
-  let descAdicional = parseFloat(document.getElementById("descAdicional").value);
+  let descAdicional = parseFloat(
+    document.getElementById("descAdicional").value
+  );
   let subTotal = parseFloat(document.getElementById("subTotal").value);
   let usuarioLogin = document.getElementById("usuarioLogin").innerHTML;
 
@@ -311,12 +425,23 @@ function emitirFactura() {
         codigoPuntoVenta: 0,
         fechaEmision: fechaFactura,
         nombreRazonSocial: rsCliente,
+        codigoTipoDocumentoIdentidad: tpDocumento,
+        numeroDocumento: nitCliente,
+        complemento: "",
+        codigoCliente: nitCliente,
+        codigoMetodoPago: metPago,
+        numeroTarjeta: null,
+        montoTotal: subTotal,
+        montoTotalSujetoIva: totAPagar,
+        montoGiftCard: 0,
+        descuentoAdicional: descAdicional,
+        codigoException: "0",
+        cafc: null,
+        leyenda: "",
+        usuario: usuarioLogin,
+        codigoDocumentoSector: 1,
       },
-      detalle: {},
+      detalle: arregloCarrito,
     },
   };
-
-
-  console.log(obj);
-  
 }

@@ -36,7 +36,7 @@
 
                         <div class="form-group col-md-3">
                             <label for="">Actividad economica</label>
-                            <select name="actEconomica" id="actEconomica" class="form-control" >
+                            <select name="actEconomica" id="actEconomica" class="form-control">
                             </select>
 
                         </div>
@@ -117,6 +117,10 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- panel de avisos -->
+                            <div class="callout callout-info direct-chat-messanges" style="height:100px;">
+                                <span class="list-unstyled" id="panelInfo"></span>
+                            </div>
 
                         </div>
                     </div>
@@ -191,9 +195,9 @@
                     <div class="form-group col-md-1">
                         <label for="">U. Medida</label>
                         <div class="input-group form-group">
-                        <input type="hidden" class="form-control" name="uniMedida" id="uniMedidaSin">
-                        
-                        <input type="text" class="form-control" name="uniMedida" id="uniMedida">
+                            <input type="hidden" class="form-control" name="uniMedida" id="uniMedidaSin">
+
+                            <input type="text" class="form-control" name="uniMedida" id="uniMedida">
                         </div>
                     </div>
 
@@ -232,21 +236,21 @@
                 </div>
             </div>
             <div class="card-footer">
-<table class="table">
-    <thead>
-        <tr>
-        <th>Descripcion</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Descuento</th>
-            <th>Precio Total</th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody id="listaDetalle">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Descripcion</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Descuento</th>
+                            <th>Precio Total</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaDetalle">
 
-    </tbody>
-</table>
+                    </tbody>
+                </table>
 
 
 
