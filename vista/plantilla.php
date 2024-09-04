@@ -36,6 +36,7 @@ if (isset($_SESSION["ingreso"]) && $_SESSION["ingreso"] == "ok") {
       $_GET["ruta"] == "VProducto" ||
       $_GET["ruta"] == "SinCatalogo" ||
       $_GET["ruta"] == "FormVenta" ||
+      $_GET["ruta"] == "apiDragonBall" ||
       $_GET["ruta"] == "VCliente"
     ) {
       include "asideMenu.php";

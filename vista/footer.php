@@ -36,11 +36,21 @@
 <!-- SweetAlert2 -->
 <script src="assest/plugins/sweetalert2/sweetalert2.min.js"></script>
 
+
+<!-- =====
+js del sistema POS 
+======== -->
 <script src="assest/js/usuario.js"></script>
 <script src="assest/js/cliente.js"></script>
 <script src="assest/js/producto.js"></script>
-
 <script src="assest/js/factura.js"></script>
+
+
+<!-- ======
+JS de practicas de API 
+===== -->
+<script src="assest/js/apis_pracrtica.js"></script>
+
 
 <!-- seccion de modelos -->
 <div class="modal fade" id="modal-default">

@@ -42,7 +42,7 @@
             <img src="assest/dist/img/user_default.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php   echo $_SESSION["login"];   ?>  </a>
+            <a href="#" class="d-block"><?php echo $_SESSION["login"];   ?> </a>
           </div>
         </div>
 
@@ -135,6 +135,32 @@
               </ul>
             </li>
 
+
+
+            
+            <!-- """""""""""
+            Codigo para la practica de APIs
+            """"""""""" -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fab fa-autoprefixer"> </i>
+                <p>Practicas APIs
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+
+              <!-- =====
+              Primera api, dradon ball 
+              ======= -->
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="apiDragonBall" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>API dragon ball</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
 
 
