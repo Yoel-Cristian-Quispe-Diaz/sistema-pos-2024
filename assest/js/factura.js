@@ -1,16 +1,17 @@
 /*====================
    variables globales
 ====================*/
+
 var host = "http://localhost:5000/";
-var codSistema = "775FA42BE90F7B78EF98F8F57";
+var codSistema = "775FA42BE90F7B78EF98F57";
 var cuis = "9272DC05";
 var nitEmpresa = 338794023;
 var rsEmpresa = "NEOMAC SRL";
-var telEmpresa = "79422560";
+var telEmpresa = "9422560";
 var dirEmpresa =
-  "Calle Pucara 129 AVENIDA 7MO ANILLO NRO. 7550 ZONA/BARRIO: TIERRAS NUEVAS UV: 0135 MZA: 007";
+  "Calle Pucara 129 AVENIDA 7MO ANILLO NRO. 7550 ZONA/BARRIO: TIERRAS NUEVAS UV:0135 MZA:007";
 var token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTdXBlcmYyhvMzMiLcjJbZ29TaxNOZW1hIjoINzc1RkE0MkJFOTBGN0I3OEY0bGNTciLCJuaXQiOjIINNHQUFBQUFBQURE0ydG9DM05ERXdNZ1lBOFFXMzNRa0FBQU E9IiwiaWQiOjYxODYwOciZxhWJoxMzNZOTYxNjAwLCJpYXQiOjE3MDI0Tc2NjAsIJ msJniNnNpC3rlbWEiOjJTRkUiFQ.4k_pQUXnIhgI5ymmXoyL43i0pSk3uKCgLMkmQ UX_FNYZWQBYrX6pWld-1w";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTdXBlcmppY2hvMzMiLCJjb2RpZ29TaXN0ZW1hIjoiNzc1RkE0MkJFOTBGN0I3OEVGOThGNTciLCJuaXQiOiJINHNJQUFBQUFBQUFBRE0ydGpDM05ERXdNZ1lBOFFXMzNRa0FBQUE9IiwiaWQiOjYxODYwOCwiZXhwIjoxNzMzOTYxNjAwLCJpYXQiOjE3MDI0OTc2NjAsIm5pdERlbGVnYWRvIjozMzg3OTQwMjMsInN1YnNpc3RlbWEiOiJTRkUifQ.4K_pQUXnIhgI5ymmXoyL43i0pSk3uKCgLMkmQeyl67h7j55GSRsH120AD44pR0aQ1UX_FNYzWQBYrX6pWLd-1w";
 
 var cufd;
 var codControlCufd;
@@ -220,32 +221,33 @@ function agregarCarrito() {
 funcion obtener CUFD
 */
 function solicitudCufd() {
-  return new Promise(resolve, reject);
-  var obj = {
-    codigoAmbiente: 2,
-    codigoModalidad: 2,
-    codigoPuntoVenta: 0,
-    codigoPuntoVentaSpecified: true,
-    codigoSistema: codSistema,
-    codigoSucursal: 0,
-    nit: nitEmpresa,
-    cuis: cuis,
-  };
-
-  $.ajax({
-    type: "POST",
-    url: host + "api/Codigos/solicitudCufd?token=" + token,
-    data: JSON.stringify(obj),
-    cache: false,
-    contentType: "application/json",
-    success: function (data) {
-      //console.log(data)
-      cufd = data["codigo"];
-      codControlCufd = data["codigoControl"];
-      fechaVigCufd = data["fechaVigencia"];
-
-      resolve(cufd);
-    },
+  return new Promise((resolve, reject)=>{
+    var obj = {
+      codigoAmbiente: 2,
+      codigoModalidad: 2,
+      codigoPuntoVenta: 0,
+      codigoPuntoVentaSpecified: true,
+      codigoSistema: codSistema,
+      codigoSucursal: 0,
+      nit: nitEmpresa,
+      cuis: cuis,
+    };
+  
+    $.ajax({
+      type: "POST",
+      url: host + "api/Codigos/solicitudCufd?token=" + token,
+      data: JSON.stringify(obj),
+      cache: false,
+      contentType: "application/json",
+      success: function (data) {
+        console.log("soliciotud exito");
+        cufd = data["codigo"];
+        codControlCufd = data["codigoControl"];
+        fechaVigCufd = data["fechaVigencia"];
+  
+        resolve(cufd);
+      },
+    });
   });
 }
 
@@ -253,8 +255,8 @@ function solicitudCufd() {
 funcion registrar  CUFD 
 ============*/
 function registrarNuevoCufd() {
-  solicitudCufd.then((ok) => {
-    if (ok != "" || ok != null) {
+  solicitudCufd().then(ok => {
+    if (ok != ""  || ok!=null) {
       var obj = {
         cufd: cufd,
         fechaVigCufd: fechaVigCufd,
@@ -266,23 +268,31 @@ function registrarNuevoCufd() {
         data: obj,
         url: "controlador/facturaControlador.php?ctrNuevoCufd",
         cache: false,
-
-
         success: function (data) {
-          $("#panelInfo").before(
+        console.log("registro exito");
+
+
+        if (data == "ok") {
+          $("#panelInfo").append(
             "<span class='text-primary'>CUFD registrado!!!</span><br>"
           );
-        },
-        error: function (xhr, status, error) {
-          $("#panelInfo").before(
-            "<span class='text-danger'>Error al registrar CUFD!!!</span><br>"
+
+          //para que los mensajes se vayan eliminado despues de 2 segundos
+          setTimeout(() => {
+            $("#panelInfo").empty().append(
+              "<span class='text-success'>CUFD Vigente, puede facturar!!!</span><br>"
+            );
+          }, 3000);
+
+
+        }else{
+          $("#panelInfo").empty().append(
+            "<span class='text-danger'>Error de conexión: " + error + "</span><br>"
           );
         }
-
-
-
-
-
+        },
+        error: function (xhr, status, error) {
+        },
       });
     }
   });
@@ -300,27 +310,31 @@ function verificarVigenciaCufd() {
     cache: false,
     dataType: "json",
     success: function (data) {
+      console.log("verificar exito");
+      console.log(data);
+
       let vigCufdActual = new Date(data["fecha_vigencia"]);
-      if (date.getTime() > vigCufdActual.getTime()) {
-        $("#panelInfo").before(
-          "<span class='text-warning'>CUFD CADUCADO!!!</span><br>"
+      if (date.getTime() > vigCufdActual.getTime() || data == false) {
+
+
+        // agregar los mensajes y que despues de unos segundos se borren
+        $("#panelInfo").append(
+          "<span class='text-warning'>CUFD CADUCADO!!!</span><br>" +
+          "<span>Registrando cufd...</span><br>"
         );
-        $("#panelInfo").before("<span>Registrando cufd...</span><br>");
+        setTimeout(() => {
+          $("#panelInfo").empty(); 
+        }, 3000);
 
 
-        
+        registrarNuevoCufd();
       } else {
-        $("#panelInfo").before(
-          "<span class='text-success'>CUFD Vigente, puede facturarar!!!</span><br>"
+        $("#panelInfo").append(
+          "<span class='text-success'>CUFD Vigente, puede facturar!!!</span><br>"
         );
-
-        /* 
-
         cufd=data["codigo_cufd"]
         codControlCufd=data["codigo_control"]
         fechaVigCufd=data["fecha_vigencia"] 
-        
-        */
       }
     },
   });
