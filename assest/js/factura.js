@@ -16,6 +16,7 @@ var token =
 var cufd;
 var codControlCufd;
 var fechaVigCufd;
+var leyenda;
 
 codigoActividad();
 
@@ -310,8 +311,8 @@ function verificarVigenciaCufd() {
     cache: false,
     dataType: "json",
     success: function (data) {
-      console.log("verificar exito");
-      console.log(data);
+/*       console.log("verificar exito");
+      console.log(data); */
 
       let vigCufdActual = new Date(data["fecha_vigencia"]);
       if (date.getTime() > vigCufdActual.getTime() || data == false) {
@@ -388,6 +389,29 @@ function eliminarDetalle(codigoProducto) {
   dibujarTablaCarrito();
 }
 
+
+/*============
+obtener las leyendas
+=============== */
+function extraerLeyenda(){
+  var obj="";
+  $.ajax({
+    type: "POST",
+    url: "controlador/facturaControlador.php?ctrLeyenda",
+    data: obj,
+    cache: false,
+    dataType: "json",
+    success: function (data) {
+ 
+      leyenda=data[1];
+    },
+  });
+  
+}
+
+
+
+
 function emitirFactura() {
   /*   id_factura	cod_factura	id_cliente	detalle	neto	descuento	total	fecha_emision	cufd	cuf	xml	id_punto_venta	id_usuario	usuario	leyenda	 */
 
@@ -417,14 +441,14 @@ function emitirFactura() {
     codigoPuntoVentaSpecified: true,
     codigoSistema: codSistema,
     codigoSucursal: 0,
-    cufd: "",
+    cufd: cufd,
     cuis: cuis,
     nit: nitEmpresa,
     tipoFacturaDocumento: 1,
     archivo: null,
     fechaEnvio: fechaFactura,
     hashArchivo: "",
-    codigoControl: "",
+    codigoControl: codControlCufd,
     factura: {
       cabecera: {
         nitEmisor: nitEmpresa,
@@ -433,7 +457,7 @@ function emitirFactura() {
         telefono: telEmpresa,
         numeroFactura: numFactura,
         cuf: "String",
-        cufd: "",
+        cufd:cufd,
         codigoSucursal: 0,
         direccion: dirEmpresa,
         codigoPuntoVenta: 0,
@@ -451,7 +475,7 @@ function emitirFactura() {
         descuentoAdicional: descAdicional,
         codigoException: "0",
         cafc: null,
-        leyenda: "",
+        leyenda: leyenda,
         usuario: usuarioLogin,
         codigoDocumentoSector: 1,
       },

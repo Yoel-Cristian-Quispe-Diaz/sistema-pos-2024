@@ -265,4 +265,8 @@
   setTimeout(() => {
     verificarVigenciaCufd();
   }, 4000);
+
+  setTimeout(() => {
+    extraerLeyenda();
+}, 5000);
 </script>
