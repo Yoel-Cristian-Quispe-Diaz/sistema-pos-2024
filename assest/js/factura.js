@@ -180,9 +180,9 @@ function agregarCarrito() {
 
   let codProducto = document.getElementById("codProducto").value;
   let conceptoPro = document.getElementById("conceptoPro").value;
-  let uniMedida = document.getElementById("uniMedida").value;
+  let uniMedida = parseInt(document.getElementById("uniMedida").value);
   let cantProducto = parseInt(document.getElementById("cantProducto").value);
-  let preUnitario = document.getElementById("preUnitario").value;
+  let preUnitario = parseFloat(document.getElementById("preUnitario").value);
   let descProducto = parseFloat(document.getElementById("descProducto").value);
   let preTotal = parseFloat(document.getElementById("preTotal").value);
 
@@ -408,13 +408,63 @@ function extraerLeyenda(){
   });
   
 }
+/* ===============
+Validar datos del formulario
+============== */
+function validarFormulario(){
+  let numFactura = document.getElementById("numFactura").value;
+  let nitCliente = document.getElementById("nitCliente").value;
+  let rsCliente = document.getElementById("rsCliente").value;
+  let emailCliente = document.getElementById("emailCliente").value;
+
+ 
+/* 
+ let tpDocumento = document.getElementById("tpDocumento").value;
+
+  let metPago = document.getElementById("metPago").value;
+  let actEconomica = document.getElementById("actEconomica").value;
+  let subTotal = document.getElementById("subTotal").value;
+  let totApagar = document.getElementById("totApagar").value; */
+
+// para todos los datos del formulario
+if ( numFactura==null || numFactura.length==0 || nitCliente==null || nitCliente.length==0 || rsCliente==null || rsCliente.length==0 || emailCliente==null || emailCliente.length==0 ) {
+  $("#panelInfo").before(
+    "<span class='text-danger'>Faltan datos por completar!!!</span><br>"
+  );
+  return false;
+}else{
+  return true;
+}
+
+/* 
+// pra cada dato en especifico
+
+if (numFactura==null || numFactura.length==0 ) {
+  $("#panelInfo").before(
+    "<span class='text-danger'> Falta el numero de Factura!!!</span><br>"
+  );
+  return false;
+}else if(nitCliente==null || nitCliente.length==0){
+return false;
+}else if(rsCliente==null || rsCliente.length==0 ){
+return false;
+}else if( emailCliente==null || emailCliente.length==0 ){
+  return false;
+}
+return true;
+}
+
+
+ */
+
+}
 
 
 
 
 function emitirFactura() {
   /*   id_factura	cod_factura	id_cliente	detalle	neto	descuento	total	fecha_emision	cufd	cuf	xml	id_punto_venta	id_usuario	usuario	leyenda	 */
-
+if(validarFormulario()==true){
   let date = new Date();
   let numFactura = parseInt(document.getElementById("numFactura").value);
   let fechaFactura = date.toISOString();
@@ -471,9 +521,12 @@ function emitirFactura() {
         numeroTarjeta: null,
         montoTotal: subTotal,
         montoTotalSujetoIva: totAPagar,
+        codigoMoneda: 1,
+        tipoCambio:1,
+        montoTotalMoneda: totAPagar,
         montoGiftCard: 0,
         descuentoAdicional: descAdicional,
-        codigoException: "0",
+        codigoException: 0,
         cafc: null,
         leyenda: leyenda,
         usuario: usuarioLogin,
@@ -482,4 +535,29 @@ function emitirFactura() {
       detalle: arregloCarrito,
     },
   };
+
+  console.log(JSON.stringify(obj));
+  $.ajax({
+    type: "POST",
+    url: host + "api/CompraVenta/recepcion",
+    data: JSON.stringify(obj),
+    cache: false,
+    contentType: "application/json",
+    processData: false,
+    success: function (data) {
+      console.log(data);
+      document.getElementById("panelInfo").innerHTML =
+          "<span class='text-success'>Factura emitida con exito!!!</span><br>";
+    },
+    error: function (xhr, status, error) {
+      console.error("Error en la solicitud:", status, error);
+      console.error("Respuesta del servidor:", xhr.responseText);
+      document.getElementById("panelInfo").innerHTML =
+          "<span class='text-danger'>Factura no emitida !!!</span><br>";
+    },
+  });
+
+
+
+}
 }
