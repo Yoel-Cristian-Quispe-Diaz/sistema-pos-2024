@@ -45,7 +45,7 @@
                             <label for="">Tipo de documento</label>
                             <select name="tpDocumenti" id="tpDocumento" class="form-control">
                                 <option value="1">Ninguno</option>
-                                <option value="1">Cedula de identidad</option>
+                                <option value="2">Cedula de identidad</option>
                                 <option value="5">NIT</option>
                             </select>
                         </div>
@@ -55,6 +55,8 @@
                             <label for="">NIT/CI</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" list="listaClientes" name="nitCliente" id="nitCliente">
+                                <input type="hidden" id="idCliente" name="idCliente">
+                                
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" onclick="busCliente()">
                                         <i class="fas fa-search"></i>

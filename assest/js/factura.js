@@ -1,7 +1,6 @@
 /*====================
    variables globales
 ====================*/
-
 var host = "http://localhost:5000/";
 var codSistema = "775FA42BE90F7B78EF98F57";
 var cuis = "9272DC05";
@@ -95,6 +94,8 @@ function busCliente() {
       }
 
       document.getElementById("rsCliente").value = data["razon_social_cliente"];
+      document.getElementById("idCliente").value = data["id_cliente"]
+
       numFactura();
     },
   });
@@ -417,15 +418,6 @@ function validarFormulario(){
   let rsCliente = document.getElementById("rsCliente").value;
   let emailCliente = document.getElementById("emailCliente").value;
 
- 
-/* 
- let tpDocumento = document.getElementById("tpDocumento").value;
-
-  let metPago = document.getElementById("metPago").value;
-  let actEconomica = document.getElementById("actEconomica").value;
-  let subTotal = document.getElementById("subTotal").value;
-  let totApagar = document.getElementById("totApagar").value; */
-
 // para todos los datos del formulario
 if ( numFactura==null || numFactura.length==0 || nitCliente==null || nitCliente.length==0 || rsCliente==null || rsCliente.length==0 || emailCliente==null || emailCliente.length==0 ) {
   $("#panelInfo").before(
@@ -435,27 +427,6 @@ if ( numFactura==null || numFactura.length==0 || nitCliente==null || nitCliente.
 }else{
   return true;
 }
-
-/* 
-// pra cada dato en especifico
-
-if (numFactura==null || numFactura.length==0 ) {
-  $("#panelInfo").before(
-    "<span class='text-danger'> Falta el numero de Factura!!!</span><br>"
-  );
-  return false;
-}else if(nitCliente==null || nitCliente.length==0){
-return false;
-}else if(rsCliente==null || rsCliente.length==0 ){
-return false;
-}else if( emailCliente==null || emailCliente.length==0 ){
-  return false;
-}
-return true;
-}
-
-
- */
 
 }
 
@@ -546,8 +517,22 @@ if(validarFormulario()==true){
     processData: false,
     success: function (data) {
       console.log(data);
-      document.getElementById("panelInfo").innerHTML =
-          "<span class='text-success'>Factura emitida con exito!!!</span><br>";
+/*       document.getElementById("panelInfo").innerHTML =
+          "<span class='text-success'>Factura emitida con exito!!!</span><br>"; */
+          if(data["codigoResultado"]!=908){
+            $("#panelInfo").before("<span class='text-danger'>ERROR FACTURA NO EMITIDA!!!</span><br>")
+          }else{
+            $("#panelInfo").before("<span>REGISTRANDO FACTURA...</span><br>")
+            let datos={
+              codigoResultado:data["codigoResultado"],
+              codigoRecepcion:data["datoAdicional"]["codigoRecepcion"],
+              cuf:data["datoAdicional"]["cuf"],
+              sentDate:data["datoAdicional"]["sentDate"],
+              xml:data["datoAdicional"]["xml"],
+            }
+            registrarFactura(datos)
+          }
+
     },
     error: function (xhr, status, error) {
       console.error("Error en la solicitud:", status, error);
@@ -556,8 +541,74 @@ if(validarFormulario()==true){
           "<span class='text-danger'>Factura no emitida !!!</span><br>";
     },
   });
-
-
-
 }
+}
+
+/*==========
+transformar fecha a  ISO 8601
+==========*/
+function transformarFecha(fechaISO){
+  let fecha_iso=fechaISO.split("T")
+  let hora_iso=fecha_iso[1].split(".")
+  let fecha=fecha_iso[0]
+  let hora=hora_iso[0]
+  let fecha_hora=fecha+" "+hora
+  return fecha_hora
+}
+
+
+/*==========
+registrar factura en la base de datos
+==========*/
+function registrarFactura(datos){
+  let numFactura=document.getElementById("numFactura").value
+  let idCliente=document.getElementById("idCliente").value
+  let subTotal=parseFloat(document.getElementById("subTotal").value)
+  let descAdicional=parseFloat(document.getElementById("descAdicional").value)
+  let totApagar=parseFloat(document.getElementById("totApagar").value)
+  let fechaEmision=transformarFecha(datos["sentDate"])
+  let idUsuario=document.getElementById("idUsuario").value
+  let usuarioLogin=document.getElementById("usuarioLogin").innerHTML
+  let obj={
+    "codFactura":numFactura,
+    "idCliente":idCliente,
+    "detalle":JSON.stringify(arregloCarrito),
+    "neto":subTotal,
+    "descuento":descAdicional,
+    "total":totApagar,
+    "fechaEmision":fechaEmision,
+    "cufd":cufd,
+    "cuf":datos["cuf"],
+    "xml":datos["xml"],
+    "idUsuario":idUsuario,
+    "usuario":usuarioLogin,
+    "leyenda":leyenda
+  }
+  $.ajax({
+    type:"POST",
+    url:"controlador/facturaControlador.php?ctrRegistrarFactura",
+    data:obj,
+    cache:false,
+    success:function(data){
+      console.log(data)
+      if(data="ok"){
+        Swal.fire({
+          icon:"success",
+          showConfirmButton:false,
+          title:"FACTURA REGISTRADA",
+          timer:1000
+        })
+        setTimeout(function(){
+          location.reload()
+        }, 1000)
+      }else{
+        Swal.fire({
+          icon:"error",
+          showConfirmButton:false,
+          title:"ERROR EN EL REGISTRO",
+          timer:1500
+        })
+      }
+    }
+  })
 }
