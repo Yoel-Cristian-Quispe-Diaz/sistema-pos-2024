@@ -7,15 +7,9 @@ if (isset($ruta["query"])) {
     if (
 
         $ruta["query"] == "ctrNumFactura" ||
-
-
-
-        $ruta["query"] == "ctrRegFactura" ||
-        $ruta["query"] == "ctrEditFactura" ||
-        $ruta["query"] == "ctrNuevoCufd" ||
-        $ruta["query"]=="ctrUltimoCufd" ||
+        $ruta["query"] == "ctrUltimoCufd" ||
         $ruta["query"] == "ctrLeyenda" ||
-        $ruta["query"]=="ctrRegistrarFactura" ||
+        $ruta["query"] == "ctrRegistrarFactura" ||
         $ruta["query"] == "ctrEliFactura"
     ) {
         $metodo = $ruta["query"];
@@ -33,18 +27,6 @@ class ControladorFactura
     }
 
 
-    static public function ctrRegFactura()
-    {
-        require "../modelo/facturaModelo.php";
-
-        // id_factura	razon_social_factura	nit_ci_factura	direccion_factura	nombre_factura	telefono_factura	email_factura
-        //creamos el array de datos
-        $data = array("razon_social_factura" => $_POST["razon_social"], "nit_ci_factura" => $_POST["nit_ci"], "direccion_factura" => $_POST["direccion"], "nombre_factura" => $_POST["nombre"], "telefono_factura" => $_POST["telefono"], "email_factura" => $_POST["email"]);
-        var_dump($data);
-        $respuesta = ModeloFactura::mdlRegFactura($data);
-
-        echo $respuesta;
-    }
 
     static public function ctrInfoFactura($id)
     {
@@ -68,50 +50,54 @@ class ControladorFactura
         $respuesta = ModeloFactura::mdlNumFactura();
         if ($respuesta[0] == null) {
             echo "1";
-        }else{
-            echo $respuesta[0]+1;
+        } else {
+            echo $respuesta[0] + 1;
         }
     }
-    static public function ctrNuevoCufd(){
+    static public function ctrNuevoCufd()
+    {
         require "../modelo/facturaModelo.php";
-        $data=array(
-            "cufd"=>$_POST["cufd"],
-            "fechaVigCufd"=>$_POST["fechaVigCufd"],
-            "codControlCufd"=>$_POST["codControlCufd"]
+        $data = array(
+            "cufd" => $_POST["cufd"],
+            "fechaVigCufd" => $_POST["fechaVigCufd"],
+            "codControlCufd" => $_POST["codControlCufd"]
         );
         echo ModeloFactura::mdlNuevoCufd($data);
     }
-    static public function ctrUltimoCufd(){
+    static public function ctrUltimoCufd()
+    {
         require "../modelo/facturaModelo.php";
-        
-        $respuesta=ModeloFactura::mdlUltimoCufd();
+
+        $respuesta = ModeloFactura::mdlUltimoCufd();
         echo json_encode($respuesta);
     }
 
-    static public function ctrLeyenda(){
+    static public function ctrLeyenda()
+    {
         require "../modelo/facturaModelo.php";
-        $respuesta=ModeloFactura::mdlLeyenda();
+        $respuesta = ModeloFactura::mdlLeyenda();
         echo json_encode($respuesta);
     }
-    static public function ctrRegistrarFactura(){
+    static public function ctrRegistrarFactura()
+    {
         require "../modelo/facturaModelo.php";
-        
-        $data=array(
-            "codFactura"=>$_POST["codFactura"],
-            "idCliente"=>$_POST["idCliente"],
-            "detalle"=>$_POST["detalle"],
-            "neto"=>$_POST["neto"],
-            "descuento"=>$_POST["descuento"],
-            "total"=>$_POST["total"],
-            "fechaEmision"=>$_POST["fechaEmision"],
-            "cufd"=>$_POST["cufd"],
-            "cuf"=>$_POST["cuf"],
-            "xml"=>$_POST["xml"],
-            "idUsuario"=>$_POST["idUsuario"],
-            "usuario"=>$_POST["usuario"],
-            "leyenda"=>$_POST["leyenda"]
+
+        $data = array(
+            "codFactura" => $_POST["codFactura"],
+            "idCliente" => $_POST["idCliente"],
+            "detalle" => $_POST["detalle"],
+            "neto" => $_POST["neto"],
+            "descuento" => $_POST["descuento"],
+            "total" => $_POST["total"],
+            "fechaEmision" => $_POST["fechaEmision"],
+            "cufd" => $_POST["cufd"],
+            "cuf" => $_POST["cuf"],
+            "xml" => $_POST["xml"],
+            "idUsuario" => $_POST["idUsuario"],
+            "usuario" => $_POST["usuario"],
+            "leyenda" => $_POST["leyenda"]
         );
-        $respuesta=ModeloFactura::mdlRegistrarFactura($data);
+        $respuesta = ModeloFactura::mdlRegistrarFactura($data);
         echo $respuesta;
     }
 }
