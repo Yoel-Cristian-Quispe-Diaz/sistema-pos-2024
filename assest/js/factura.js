@@ -148,27 +148,22 @@ function datosProducto() {
     },
   });
 }
+
+/* ==========
+calcularPreProd
+============= */
 function calculartotal() {
+
+  // el descuento se calcula en base al precio total del producto (cantidad*precio unitario)
   var cantidad = document.getElementById("cantProducto").value;
   var precio = document.getElementById("preUnitario").value;
   var descuento = document.getElementById("descProducto").value;
   cantidad = parseInt(cantidad);
   precio = parseFloat(precio);
+  descuento = parseFloat(descuento);
 
-  /* =========
-mi formulario tiene un campo de descuento que puede ser en porcentaje o en cantidad
-========== */
-  if (descuento.includes("%")) {
-    descuento = descuento.replace(/%/g, "");
-    descuento = parseInt(descuento);
-    descuento = descuento / 100;
-    precio = precio * descuento;
-  } else {
-    descuento = parseFloat(descuento);
-    precio = precio - descuento;
-  }
-  var total = cantidad * precio;
-  document.getElementById("preTotal").value = total;
+  let preProducto=(precio*cantidad)-descuento
+  document.getElementById("preTotal").value=preProducto
 }
 
 /* ==========
@@ -629,4 +624,88 @@ function MVerFactura(id){
          $("#content-xl").html(data);
      }
   })
+}
+
+
+
+function MEliFactura(cuf){
+  let obj={
+    codigoAmbiente:2,
+    codigoPuntoVenta:0,
+    codigoPuntoVentaSpecified:true,
+    codigoSistema:codSistema,
+    codigoSucursal:0,
+    nit:nitEmpresa,
+    codigoDocumentoSector:1,
+    codigoEmision:1,
+    codigoModalidad:2,
+    cufd:cufd,
+    cuis:cuis,
+    tipoFacturaDocumento:1,
+    codigoMotivo:1,
+    cuf:cuf
+  }
+  Swal.fire({
+    title:"¿Está seguro de anular esta factura?",
+    showDenyButton:true,
+    showCancelButton:false,
+    confirmButtonText:'Confirmar',
+    denyButtonText:'Cancelar'
+}).then((result)=>{
+    if(result.isConfirmed){
+        $.ajax({
+            type:"POST",
+            url:host+"api/CompraVenta/anulacion",
+            data:JSON.stringify(obj),
+            cache:false,
+            contentType:"application/json",
+            processData:false,
+            success: function(data) {
+              if(data["codigoEstado"]==905){
+                anularFactura(cuf)
+              }
+              else{
+                Swal.fire({
+                  icon:'error',
+                  title:"ERROR",
+                  text:"Anulación rechazada",
+                  showConfirmButton:false,
+                  timer:1000
+              })
+              }
+            }
+        })
+    }
+})
+}
+function anularFactura(cuf){
+  let obj={
+    cuf:cuf
+  }
+  $.ajax({
+    type:"POST",
+    url:"controlador/facturaControlador.php?ctrAnularFactura",
+    data:obj,
+    success: function(data) {
+      if(data=="ok"){
+        Swal.fire({
+          icon:'success',
+          title:"Factura Anulada ",
+          showConfirmButton:false,
+          timer:1000
+      })
+      setTimeout(function(){
+        location.reload()
+      },1200)
+      }else{
+        Swal.fire({
+          icon:'error',
+          title:"ERROR",
+          text:"Error al anular",
+          showConfirmButton:false,
+          timer:1000
+      })
+      }
+    }
+})
 }
