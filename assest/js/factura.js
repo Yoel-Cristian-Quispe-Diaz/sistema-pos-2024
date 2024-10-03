@@ -485,7 +485,7 @@ if(validarFormulario()==true){
         codigoCliente: nitCliente,
         codigoMetodoPago: metPago,
         numeroTarjeta: null,
-        montoTotal: subTotal,
+        montoTotal: totAPagar,
         montoTotalSujetoIva: totAPagar,
         codigoMoneda: 1,
         tipoCambio:1,

@@ -23,6 +23,13 @@ session_start();
   <link rel="icon" href="assest/dist/img/logo_POS.png">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="assest/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
+
+  <!-- daterangepicker -->
+  <script src="assest/plugins/moment/moment.min.js"></script>
+  <script src="assest/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- ChartJS -->
+  <script src="assest/plugins/chart.js/Chart.min.js"></script>
 </head>
 
 

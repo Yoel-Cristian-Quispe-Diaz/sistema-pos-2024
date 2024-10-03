@@ -1,14 +1,14 @@
 <?php
-    require_once "../../controlador/facturaControlador.php";
-    require_once "../../modelo/facturaModelo.php";
-    $id=$_GET["id"];
-    $factura=ControladorFactura::ctrInfoFactura($id);
-    $producto=json_decode($factura["detalle"],true)
+require_once "../../controlador/facturaControlador.php";
+require_once "../../modelo/facturaModelo.php";
+$id = $_GET["id"];
+$factura = ControladorFactura::ctrInfoFactura($id);
+$producto = json_decode($factura["detalle"], true)
 ?>
 <div class="modal-header bg-info">
     <h4 class="modal-title">Informacion Factura</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+        <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
@@ -38,16 +38,16 @@
                 <tr>
                     <th>Estado: </th>
                     <td>
-                    <?php
-                          if($factura["estado_factura"]==1){?>
-                          <span class="badge badge-success">Emitido</span>
-                            <?php
-                          }else{
-                            ?>
+                        <?php
+                        if ($factura["estado_factura"] == 1) { ?>
+                            <span class="badge badge-success">Emitido</span>
+                        <?php
+                        } else {
+                        ?>
                             <span class="badge badge-danger">Anulado</span>
-                            <?php
-                          }
-                          ?>
+                        <?php
+                        }
+                        ?>
                     </td>
                 </tr>
                 <tr>
@@ -66,7 +66,7 @@
                     <th>Total(Bs.)</th>
                 </thead>
                 <tbody>
-                    <?php foreach($producto as $value){ ?>
+                    <?php foreach ($producto as $value) { ?>
                         <tr>
                             <td><?php echo $value["descripcion"]; ?></td>
                             <td><?php echo $value["cantidad"]; ?></td>
@@ -74,10 +74,18 @@
                             <td><?php echo $value["montoDescuento"]; ?></td>
                             <td><?php echo $value["subTotal"]; ?></td>
                         </tr>
-                    <?php }?>
+                    <?php } ?>
                     <tr>
-                        <td colspan="4"><br><b>Total</b></td>
-                        <td><?php echo $factura["neto"] ?></td>
+                        <td colspan="4"><br><b>Total Neto</b></td>
+                        <td> <br> <?php echo $factura["neto"] ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>Descuento</b></td>
+                        <td><?php echo $factura["descuento"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>Total</b></td>
+                        <td><?php echo $factura["total"]; ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -85,5 +93,5 @@
     </div>
 </div>
 <div class="modal-footer justify-content-between">
-    
+
 </div>
