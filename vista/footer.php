@@ -35,11 +35,19 @@
 
 <!-- SweetAlert2 -->
 <script src="assest/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- daterangepicker -->
+<script src="assest/plugins/moment/moment.min.js"></script>
+<script src="assest/plugins/daterangepicker/daterangepicker.js"></script>
+
+<!-- ChartJS -->
+<script src="assest/plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="assest/dist/js/pages/dashboard.js"></script>
 
 <script src="assest/js/usuario.js"></script>
 <script src="assest/js/cliente.js"></script>
 <script src="assest/js/producto.js"></script>
-
+<script src="assest/js/reporte.js"></script>
 <script src="assest/js/factura.js"></script>
 
 <!-- seccion de modelos -->
@@ -62,13 +70,9 @@
         </div>
         <!-- /.modal-dialog -->
 </div>
-<!-- daterangepicker -->
-<script src="assest/plugins/moment/moment.min.js"></script>
-<script src="assest/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- ChartJS -->
-<script src="assest/plugins/chart.js/Chart.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- <script src="assest/dist/js/pages/dashboard.js"></script> -->
+
+
+
 <div class="modal fade" id="modal-xl">
         <div class="modal-dialog modal-xl">
           <div class="modal-content" id="content-xl">
