@@ -24,15 +24,21 @@ class ControladorCliente
         return $respuesta;
     }
 
-
     static public function ctrRegCliente()
     {
-        require "../modelo/clienteModelo.php";
+        require "../modelo/pacienteModelo.php";
 
-        // id_cliente	razon_social_cliente	nit_ci_cliente	direccion_cliente	nombre_cliente	telefono_cliente	email_cliente
-        //creamos el array de datos
-        $data = array("razon_social_cliente" => $_POST["razon_social"], "nit_ci_cliente" => $_POST["nit_ci"], "direccion_cliente" => $_POST["direccion"], "nombre_cliente" => $_POST["nombre"], "telefono_cliente" => $_POST["telefono"], "email_cliente" => $_POST["email"]);
-        var_dump($data);
+        // id, nombre, apellido, fecha_nacimiento, direccion, telefono, correo
+        // Creamos el array de datos
+        $data = array(
+            "nombre" => $_POST["nombre"],
+            "apellido" => $_POST["apellido"],
+            "fecha_nacimiento" => $_POST["fecha_nacimiento"],
+            "direccion" => $_POST["direccion"],
+            "telefono" => $_POST["telefono"],
+            "correo" => $_POST["correo"]
+        );
+
         $respuesta = ModeloCliente::mdlRegCliente($data);
 
         echo $respuesta;
@@ -44,42 +50,46 @@ class ControladorCliente
         return $respuesta;
     }
 
-
-
-
-
-
     static public function ctrEditCliente()
     {
-        require "../modelo/clienteModelo.php";
+        require "../modelo/pacienteModelo.php";
 
-        $data = array("razon_social_cliente" => $_POST["razon_social"], "nit_ci_cliente" => $_POST["nit_ci"], "direccion_cliente" => $_POST["direccion"], "nombre_cliente" => $_POST["nombre"], "telefono_cliente" => $_POST["telefono"], "email_cliente" => $_POST["email"] , "id_cliente" => $_POST["id"]);
+        // Actualizamos los datos del paciente
+        $data = array(
+            "nombre" => $_POST["nombre"],
+            "apellido" => $_POST["apellido"],
+            "fecha_nacimiento" => $_POST["fecha_nacimiento"],
+            "direccion" => $_POST["direccion"],
+            "telefono" => $_POST["telefono"],
+            "correo" => $_POST["correo"],
+            "id" => $_POST["id"]
+        );
 
-        $respuesta= ModeloCliente::mdlEditCliente($data);
+        $respuesta = ModeloCliente::mdlEditCliente($data);
         echo $respuesta;
     }
 
-
-
     static public function ctrEliCliente()
     {
-        require "../modelo/clienteModelo.php";
+        require "../modelo/pacienteModelo.php";
         $id = $_POST["id"];
 
         $respuesta = ModeloCliente::mdlEliCliente($id);
         echo $respuesta;
     }
 
+    static public function ctrBusCliente()
+    {
+        require "../modelo/pacienteModelo.php";
+        $apellidoCliente = $_POST["apellido"];
 
-    static public function ctrBusCliente(){
-        require "../modelo/clienteModelo.php";
-        $nitCliente=$_POST["nitCliente"];
-        
-        $respuesta=ModeloCliente::mdlBusCliente($nitCliente);
+        $respuesta = ModeloCliente::mdlBusCliente($apellidoCliente);
         echo json_encode($respuesta);
-
     }
 
-
-
+    static public function ctrCantidadClientes()
+    {
+        $respuesta = ModeloCliente::mdlCantidadClientes();
+        return $respuesta;
+    }
 }

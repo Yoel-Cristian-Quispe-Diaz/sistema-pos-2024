@@ -39,9 +39,9 @@ class ControladorFactura
     static function ctrAnularFactura()
     {
         require "../modelo/facturaModelo.php";
-        $cuf=$_POST["cuf"];
+        $cuf = $_POST["cuf"];
 
-        $respuesta= ModeloFactura::mdlAnularFactura($cuf);
+        $respuesta = ModeloFactura::mdlAnularFactura($cuf);
         echo $respuesta;
     }
 
@@ -100,5 +100,12 @@ class ControladorFactura
         );
         $respuesta = ModeloFactura::mdlRegistrarFactura($data);
         echo $respuesta;
+    }
+    
+    static public function ctrCantidadVentas()
+    {
+        $respuesta = ModeloFactura::mdlCantidadVentas();
+        return $respuesta;
+        //echo $respuesta;
     }
 }

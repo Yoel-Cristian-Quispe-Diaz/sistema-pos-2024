@@ -1,4 +1,12 @@
 
+<?php
+$producto=ControladorProducto::ctrCantidadProductos();
+$ventas=ControladorFactura::ctrCantidadVentas();
+$cliente=ControladorCliente::ctrCantidadClientes();
+$usuario=ControladorUsuario::ctrCantidadUsuarios();
+
+?>
+  
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->

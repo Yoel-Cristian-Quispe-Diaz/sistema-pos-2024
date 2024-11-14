@@ -33,9 +33,6 @@ class ControladorProducto
         echo $respuesta;
     }
 
-
-
-
     static public function ctrInfoProducto($id)
     {
         $respuesta = ModeloProducto::mdlInfoProducto($id);
@@ -69,14 +66,16 @@ class ControladorProducto
     }
 
     static public function ctrDatosProducto()
-   {
-    require "../modelo/productoModelo.php";
-    $codProducto=$_POST["codProducto"];
-    $respuesta=ModeloProducto::mdlDatosProducto($codProducto);
-    echo json_encode($respuesta);
-   } 
+    {
+        require "../modelo/productoModelo.php";
+        $codProducto = $_POST["codProducto"];
+        $respuesta = ModeloProducto::mdlDatosProducto($codProducto);
+        echo json_encode($respuesta);
+    }
 
-
-
-
+    static public function ctrCantidadProductos()
+    {
+        $respuesta = ModeloProducto::mdlCantidadProductos();
+        return $respuesta;
+    }
 }
